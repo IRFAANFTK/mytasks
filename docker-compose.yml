@@ -12,7 +12,6 @@ services:
             context: .
             dockerfile: Dockerfile
 
-
     webserver:
         image: nginx:alpine
         container_name: laravel_webserver
@@ -35,6 +34,18 @@ services:
             MYSQL_PASSWORD: secret
         volumes:
             - dbdata:/var/lib/mysql
+        networks:
+            - laravel
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: laravel_phpmyadmin
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "8080:80"
         networks:
             - laravel
 

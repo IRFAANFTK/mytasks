@@ -30,8 +30,7 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Install Node.js dependencies
-RUN npm install && npm run dev
+
 
 # Set permissions (optional, but common for Laravel)
 RUN chown -R www-data:www-data /var/www \
