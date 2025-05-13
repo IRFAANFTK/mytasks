@@ -6,16 +6,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Users Lists
-<br>
-                        <a href="/users/create"><button type="button" class="btn btn-success">Create New User</button></a>
-
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-primary me-md-2" type="button">Department</button>
-                            <button class="btn btn-info type="button">Users</button>
-                        </div>
+                        <a href="/users/create"><button type="button" class="btn btn-success">Add New User</button></a>
                     </div>
-
                     <div class="card-body">
                         <table class="table table-hover">
 
@@ -23,20 +15,30 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
+                                <th scope="col">Department</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Password</th>
+                                <th scope="col">No.of tasks</th>
+
 
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($users as $user)
                             <tr>
-                                <th scope="row">{{$user->id}}</th>
+                                <th scope="row">{{ $loop->iteration }}</th>
                                 <td>{{$user->name}}</td>
+                                <td>{{$user->department->name?? 'No department'}}</td>
                                 <td>{{$user->email}}</td>
-                                <td>{{$user->password}}</td>
+                                <td>{{ $user->tasks_count}}</td>
+
+
+
+
 
                                 <td>
+                                    <a href="{{ route('users.show', $user->id) }}">
+                                        <button type="button" class="btn btn-info">Show</button>
+                                    </a>
                                     <a href="/users/edit/{{$user->id}}">
                                         <button type="button" class="btn btn-warning">Edit</button>
                                     </a>
@@ -44,12 +46,11 @@
                                     <form action="{{ route('users.delete', $user->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this task?')">
                                             Delete
                                         </button>
                                     </form>
                                 </td>
-
                             </tr>
                             @endforeach
                             </tbody>
