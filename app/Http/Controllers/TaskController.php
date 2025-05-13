@@ -16,7 +16,7 @@ class TaskController extends Controller
     {
         $user = Auth::user();
 
-        $tasks = Task::latest()->with('user')->paginate(5);
+        $tasks = Task::latest()->with('user')->paginate(10);
 
         return view('tasks.index', [
             'tasks' => $tasks
@@ -42,14 +42,15 @@ class TaskController extends Controller
 
     public function show(Task $task)
     {
-        return view('tasks.show', [
-            'task' => $task
-        ]);
+       $task->load('assignee');
+       return view('tasks.show', compact('task'));
     }
 
     public function edit(Task $task)
     {
         $users = User::all();
+        $task->load('assignee');
+
         return view('tasks.edit', [
             'users' => $users,
             'task' => $task

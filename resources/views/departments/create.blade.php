@@ -16,30 +16,14 @@
                 <div class="card-body">
                     <form action="{{ route('departments.store') }}" method="post">
                         @csrf
-
-
                         <div class="mb-3 row">
                             <label for="name" class="col-md-4 col-form-label text-md-end text-start">Name</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                       name="name" value="{{ old('name') }}">
-                                @if ($errors->has('name'))
-                                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                                @endif
-                            </div>
+                                <input type="text" name="name" class="form-control" placeholder="Department Name">
+                                </div>
                         </div>
 
-                        <div class="mb-3 row">
-                            <label for="department"
-                                   class="col-md-4 col-form-label text-md-end text-start">Department</label>
-                            <div class="col-md-6">
-                                <select id="department" name="department">
-                                    @foreach($departments as $department)
-                                        <option value= "{{ $department->id }}">{{$department->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+
 
                         <div class="mb-3 row">
                             <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add Department">

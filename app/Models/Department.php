@@ -15,6 +15,7 @@ class Department extends Model
         'name',
         'department'
 
+
     ];
 
     public function users(): HasMany

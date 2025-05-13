@@ -6,6 +6,8 @@ use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreDepartmentRequest;
+use App\Http\Requests\UpdateDepartmentRequest;
 use Illuminate\Http\RedirectResponse;
 
 
@@ -16,7 +18,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::latest()->paginate(2);
+        $departments = Department::latest()->paginate(10);
         return view('departments.index', [
             'departments' => $departments
         ]);
@@ -36,10 +38,11 @@ class DepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($request)
+    public function store(StoreDepartmentRequest $request)
     {
+
         Department::create([
-        'name' => $request->department
+            'name' => $request->name
         ]);
         return redirect()->route('departments.index')
             ->withSuccess('New Department is added successfully.');
@@ -68,7 +71,7 @@ class DepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($request, Department $department) :  RedirectResponse
+    public function update(Request $request, Department $department) :  RedirectResponse
     {
         $department->update($request->all());
         return redirect()->back()

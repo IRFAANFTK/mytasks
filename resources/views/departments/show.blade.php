@@ -24,12 +24,6 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <label for="department" class="col-md-4 col-form-label text-md-end text-start"><strong>Department:</strong></label>
-                        <div class="col-md-6" style="line-height: 35px;">
-                            {{ $department->department}}
-                        </div>
-                    </div>
 
 
                 </div>

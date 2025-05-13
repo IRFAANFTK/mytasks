@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('departments.update', $department->id) }}" method="POST">
+                    <form action="{{ route('departments.update', $department) }}" method="POST">
                         @csrf
                         @method("PUT")
 
@@ -37,7 +37,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
 
                         <div class="mb-3 row">
                             <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Update">

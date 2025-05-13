@@ -35,7 +35,7 @@
                         <label for="assignee"
                                class="col-md-4 col-form-label text-md-end text-start"><strong>Assignee:</strong></label>
                         <div class="col-md-6" style="line-height: 35px;">
-                            {{ $task->assignee }}
+                            {{ $task->assignee->name ?? 'N/A' }}
                         </div>
                     </div>
 

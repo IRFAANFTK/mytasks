@@ -35,11 +35,16 @@
                                 <td>{{ $user->email}}</td>
                                 <td>{{ $user->tasks_count}}</td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user->id) }}"
-                                       class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
                                     <form action="{{ route('users.destroy', $user->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
+
+                                        <a href="{{ route('users.show', $user->id) }}"
+                                           class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
+
+                                        <a href="{{ route('users.edit', $user->id) }}"
+                                           class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+
                                         <button type="submit" class="btn btn-danger btn-sm"
                                                 onclick="return confirm('Do you want to delete this user?');"><i
                                                 class="bi bi-trash"></i> Delete
