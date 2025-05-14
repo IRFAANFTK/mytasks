@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $createdTasks = Task::whereNull('started_at')->whereNull('ended_at')->get();
+        $inProgressTasks = Task::whereNotNull('started_at')->whereNull('ended_at')->get();
+        $doneTaks = Task::whereNotNull('started_at')->whereNotNull('ended_at')->get();
+
+        return view('home', compact('createdTasks','inProgressTasks','doneTaks'));
     }
 }
