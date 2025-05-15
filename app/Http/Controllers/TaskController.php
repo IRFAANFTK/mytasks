@@ -71,4 +71,27 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')
             ->withSuccess('Task is deleted successfully.');
     }
+
+
+    public function start(Task $task)
+    {
+        $task->started_at = now();
+        $task->save();
+        return redirect()->back()->withSuccess('Task is updated successfully.');
+    }
+
+    public function end(Task $task)
+    {
+        $task->ended_at= now();
+        $task->save();
+        return redirect()->back()->withSuccess('Task is updated successfully.');
+    }
+
+
+    public function delete(Task $task)
+    {
+        $task->delete();
+        return redirect()->back()->withSuccess('Task is deleted successfully.');
+    }
+
 }

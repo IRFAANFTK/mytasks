@@ -35,12 +35,12 @@
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>{{ $task->name }}</td>
-                                <td>{{ $task->description}}</td>
+                                <td>{{ $task->description }}</td>
                                 <td>{{ $task->started_at }}</td>
                                 <td>{{ $task->ended_at }}</td>
-                                <td>{{ $task->user->name}}</td>
+                                <td>{{ $task->user ? $task->user->name : 'No User Assigned' }}</td>
                                 <td>{{ $task->created_at }}</td>
-                                <td>{{ $task->updated_at}}</td>
+                                <td>{{ $task->updated_at }}</td>
                                 <td>
                                     <form action="{{ route('tasks.destroy', $task->id) }}" method="post">
                                         @csrf
