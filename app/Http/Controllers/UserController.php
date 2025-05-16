@@ -15,8 +15,8 @@ class UserController extends Controller
         $users = User::latest()->with('department')->paginate(10);
         $users = User::withCount('tasks')->paginate(10);
 
-        return view('users.index',[
-            'users' => $users]);
+        return view('users.index',compact('users'));
+
     }
 
     public function create()

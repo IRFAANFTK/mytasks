@@ -18,10 +18,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::latest()->paginate(10);
-        return view('departments.index', [
-            'departments' => $departments
-        ]);
+    $departments=Department::orderBy('name', 'asc')->get();
+        return view('departments.index',compact('departments'));
+
+
 
     }
 

@@ -7,11 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
+    Route::resource('tasks', TaskController::class);
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
     Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
@@ -24,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
 
 
+
+    Route::resource('departments', DepartmentController::class);
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
     Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
     Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
@@ -31,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::put('/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
     Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
     Route::get('/departments/{department}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
+
+
+
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
