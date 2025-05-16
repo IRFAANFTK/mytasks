@@ -14,13 +14,11 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
 
-        $tasks = Task::latest()->with('user')->paginate(10);
 
-        return view('tasks.index', [
-            'tasks' => $tasks
-        ]);
+        $tasks=Task::orderBy('name', 'asc')->get();
+        return view('tasks.index',compact('tasks'));
+
 
     }
 

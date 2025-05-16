@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm my-2"><i
                             class="bi bi-plus-circle"></i> Add New Task</a>
-                    <table class="table table-striped table-bordered">
+                    <table id="taskTable" class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th scope="col">S#</th>
@@ -28,6 +28,7 @@
                             <th scope="col">Assignee</th>
                             <th scope="col">Created at</th>
                             <th scope="col">Updated at</th>
+                            <th scope="col">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -47,14 +48,17 @@
                                         @method('DELETE')
 
                                         <a href="{{ route('tasks.show', $task->id) }}"
-                                           class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
-
+                                           class="btn btn-warning btn-sm" ><i class="bi bi-eye"></i> Show</a>        <br>
+                                        <br>
                                         <a href="{{ route('tasks.edit', $task->id) }}"
-                                           class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
 
+                                           class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i>  Edit <br></a> <br>
+
+                                        <br>
                                         <button type="submit" class="btn btn-danger btn-sm"
                                                 onclick="return confirm('Do you want to delete this task?');"><i
                                                 class="bi bi-trash"></i> Delete
+
                                         </button>
                                     </form>
                                 </td>
@@ -69,11 +73,40 @@
                         </tbody>
                     </table>
 
-                    {{ $tasks->links() }}
+
 
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#taskTable').DataTable({
+
+                order: [[1, 'asc']]
+
+            });
+
+        });
+
+    </script>
 
 @endsection

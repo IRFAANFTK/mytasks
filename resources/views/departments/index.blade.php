@@ -19,11 +19,12 @@
                     <a href="{{ route('departments.create') }}" class="btn btn-success btn-sm my-2"><i
                             class="bi bi-plus-circle"></i> Add New Department</a>
 
-                    <table class="table table-striped table-bordered">
+                    <table id="departmentIrfaan" class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th scope="col">S#</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Actions</th>
 
                         </tr>
                         </thead>
@@ -66,11 +67,33 @@
                         </tbody>
                     </table>
 
-                    {{ $departments->links() }}
+
 
                 </div>
             </div>
         </div>
     </div>
+
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $('#departmentIrfaan').DataTable({
+
+                order: [[1, 'asc']]
+
+            });
+
+        });
+
+    </script>
+
 
 @endsection
