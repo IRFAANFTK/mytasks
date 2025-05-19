@@ -15,7 +15,6 @@ class WelcomeEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
-    public $verificationUrl;
 
     public function build()
     {
