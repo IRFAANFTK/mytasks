@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeEmail;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
 {
@@ -43,6 +46,8 @@ class UserController extends Controller
             'password' =>Hash::make($request->password),
             'department_id' => $request->department_id,
         ]);
+
+        Mail::to('admin@gmail.com')->send(new WelcomeEmail($user));
 
         return redirect('/users')->with('status', 'User created successfully.');
     }
