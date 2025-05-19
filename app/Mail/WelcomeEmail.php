@@ -3,12 +3,10 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Mail;
 
 class WelcomeEmail extends Mailable
 {
@@ -63,12 +61,5 @@ class WelcomeEmail extends Mailable
     public function attachments(): array
     {
         return [];
-    }
-
-    public function sendWelcomeEmail($user)
-    {
-        Mail::to($user->email)->send(new WelcomeEmail($user));
-
-        return 'Welcome email sent successfully!';
     }
 }
