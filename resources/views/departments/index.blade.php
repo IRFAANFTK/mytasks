@@ -70,7 +70,7 @@
                         </tbody>
                     </table>
 
-                    {{ $departments->links() }}
+
 
                 </div>
             </div>

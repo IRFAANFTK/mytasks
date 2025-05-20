@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/departments/{department}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
 
 
+    Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
+    Route::get('/calendar/events', [App\Http\Controllers\CalendarController::class, 'getTasks'])->name('calendar.events');
+
 
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

@@ -13,10 +13,8 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $task->name ?? '') }}">
-
                         @error('name')
                         <span class="text-danger small">{{ $message }}</span>
-
                         @enderror
                     </div>
                     <div class="mb-3">
@@ -25,8 +23,19 @@
 
                         @error('description')
                         <span class="text-danger small">{{ $message }}</span>
-
                         @enderror
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="due_at"
+                               class="col-md-4 col-form-label text-md-end text-start">Due_at</label>
+                        <div class="col-md-6">
+                            <input type="date" class="form-control @error('due_at') is-invalid @enderror"
+                                   id="due_at" name="description" value="{{ $task->description }}">
+                            @if ($errors->has('due_at'))
+                                <span class="text-danger">{{ $errors->first('due_at') }}</span>
+                            @endif
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="started_at" class="form-label">Started At</label>
@@ -34,22 +43,18 @@
 
                         @error('started_at')
                         <span class="text-danger small">{{ $message }}</span>
-
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="ended_at" class="form-label">Ended At</label>
                         <input type="date" class="form-control @error('ended_at') is-invalid @enderror" name="ended_at" value="{{ old('ended_at', isset($task) ? \Carbon\Carbon::parse($task->ended_at)->format('Y-m-d') : '') }}">
-
                         @error('ended_at')
                         <span class="text-danger small">{{ $message }}</span>
-
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="user_id" class="form-label">Assignee</label>
                         <select class="form-select" name="user_id">
-
                             @foreach($users as $user)
                                 <option value="{{ $user->id }}" {{ old('user_id', $task->user_id ?? '') == $user->id ? 'selected' : '' }}>
 
