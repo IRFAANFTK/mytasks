@@ -44,4 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 
+    Route::get('/toggle-dark', function () {
+        session()->put('dark_mode', !session('dark_mode', false));
+        return back();
+    })->name('toggle.dark');
+
+
 });

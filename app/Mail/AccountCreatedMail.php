@@ -3,46 +3,43 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeEmail extends Mailable
+class AccountCreatedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-    public $userCount;
-
-    public function build()
-    {
-        return $this->view('emails.welcome')
-            ->with([
-                'user' => $this->user,
-                'userCount' => $this->userCount
-            ]);
-    }
-
+    public $email;
+    public $password;
 
     /**
      * Create a new message instance.
      */
-
-    public function __construct($user, $userCount)
+    public function __construct($email, $password)
     {
-        $this->user = $user;
-        $this->userCount = $userCount;
+        $this->email = $email;
+        $this->password = $password;
     }
-
 
     /**
      * Get the message envelope.
      */
+    public function build()
+    {
+        return $this->subject('Your Account Has Been Created')
+            ->view('emails.account_created')
+            ->with(['email' => $this->email, 'password' => $this->password,
+        ]);
+    }
+
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome Email',
+            subject: 'Account Created Mail',
         );
     }
 
@@ -52,7 +49,7 @@ class WelcomeEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.welcome',
+            view: 'emails.account_created',
         );
     }
 

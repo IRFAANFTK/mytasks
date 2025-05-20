@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AccountCreatedMail;
 use App\Mail\WelcomeEmail;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
 {
     public function index()
     {
         $users = User::latest()->with('department')->paginate(10);
-        $users = User::withCount('tasks')->paginate(10);
+        $users = User::withCount('tasks')->paginate(20);
 
         return view('users.index',compact('users'));
 
@@ -39,18 +38,27 @@ class UserController extends Controller
             'department_id' => 'required'
         ]);
 
+        $plainPassword = $request->password;
+
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' =>Hash::make($request->password),
+            'password' => Hash::make($plainPassword),
             'department_id' => $request->department_id,
         ]);
 
-        Mail::to('admin@gmail.com')->send(new WelcomeEmail($user));
+        $userCount = User::count();
 
-        return redirect('/users')->with('status', 'User created successfully.');
-    }
+        Mail::to('admin@gmail.com')->send(new WelcomeEmail($user, $userCount));
+        Mail::to($user->email)->send(new AccountCreatedMail($user->email, $plainPassword));
+
+        return redirect('/users')->with(['status' => 'User created successfully.',
+        'userCount' => $userCount
+    ]);
+
+        }
+
 
     public function edit(User $user)
     {
