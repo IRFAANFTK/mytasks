@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @yield('scripts')
 
     <div class="row justify-content-center mt-3">
         <div class="col-md-8">
@@ -76,6 +77,20 @@
                             </div>
                         </div>
 
+
+
+                        <div class="mb-3">
+                            <label for="progress" class="form-label">Progress (%)</label>
+                            <div class="d-flex align-items-center">
+                                <input type="range" class="form-range me-3" name="progress" id="progress" min="0" max="100"
+                                       value="{{ old('progress', $task->progress ?? 0) }}">
+                                <span id="progressValue" class="fw-bold">{{ old('progress', $task->progress ?? 0) }}</span>
+                            </div>
+                        </div>
+
+
+
+
                         <div class="mb-3 row">
                             <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add Tasks">
                         </div>
@@ -86,4 +101,41 @@
         </div>
     </div>
 
+@endsection
+@section('script')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const slider = document.getElementById('progress');
+            const output = document.getElementById('progressValue');
+            if (slider && output) {
+                output.innerText = slider.value;
+                slider.addEventListener('input', function () {
+                    output.innerText = this.value;
+                });
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('.toggle-switch');
+            const input = document.getElementById('priorityInput');
+            const label = document.getElementById('priorityLabel');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function () {
+
+                    toggles.forEach(t => t.classList.remove('active'));
+                    
+                    this.classList.add('active');
+
+                    const priority = this.getAttribute('data-priority');
+                    input.value = priority;
+                    label.textContent = priority;
+                });
+            });
+
+            const current = input.value;
+            document.querySelector(`.toggle-switch[data-priority="${current}"]`)?.classList.add('active');
+        });
+    </script>
 @endsection
