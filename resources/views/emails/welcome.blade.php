@@ -15,6 +15,7 @@
         <div class="card-body">
             <p><strong>Name:</strong> {{ $user->name }}</p>
             <p><strong>Email:</strong> {{ $user->email }}</p>
+            <p><strong>Total Users in the system</strong> {{ $userCount }}</p>
 
             <hr>
 
