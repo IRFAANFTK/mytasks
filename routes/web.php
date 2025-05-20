@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RolePermissionController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -43,6 +44,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('roles_permissions', [RolePermissionController::class, 'index'])->name('roles_permissions.index');
+        Route::post('roles_permissions/createRole', [RolePermissionController::class, 'createRole'])->name('roles_permissions.createRole');
+        Route::post('roles_permissions/createPermission', [RolePermissionController::class, 'createPermission'])->name('roles_permissions.createPermission');
+        Route::post('roles_permissions/assignPermissions', [RolePermissionController::class, 'assignPermissionsToRole'])->name('roles_permissions.assignPermissionsToRole');
+        Route::get('roles_permissions/editRole/{id}', [RolePermissionController::class, 'editRole'])->name('roles_permissions.editRole');
+        Route::put('roles_permissions/updateRole/{id}', [RolePermissionController::class, 'updateRole'])->name('roles_permissions.updateRole');
+        Route::delete('roles_permissions/deleteRole/{id}', [RolePermissionController::class, 'deleteRole'])->name('roles_permissions.deleteRole');
+    });
 
     Route::get('/toggle-dark', function () {
         session()->put('dark_mode', !session('dark_mode', false));
