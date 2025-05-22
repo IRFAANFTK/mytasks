@@ -45,6 +45,17 @@
 
                         <!-- Task Start Date -->
                         <div class="mb-3 row">
+                            <label for="due_at"
+                                   class="col-md-4 col-form-label text-md-end text-start">Due At</label>
+                            <div class="col-md-6">
+                                <input type="date" class="form-control @error('due_at') is-invalid @enderror"
+                                       id="due_at" name="due_at">{{ old('due_at') }}</textarea>
+                                @if ($errors->has('due_at'))
+                                    <span class="text-danger">{{ $errors->first('due_at') }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label for="started_at"
                                    class="col-md-4 col-form-label text-md-end text-start">Started At</label>
                             <div class="col-md-6">

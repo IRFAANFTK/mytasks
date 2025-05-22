@@ -27,12 +27,21 @@
                         <span class="text-danger small">{{ $message }}</span>
                         @enderror
                     </div>
+
+                    <div class="mb-3">
+                        <label for="due_at" class="form-label">Due_at</label>
+                        <input type="date" class="form-control @error('due_at') is-invalid @enderror" name="started_at" value="{{ old('due_at', isset($task) ? \Carbon\Carbon::parse($task->due_at)->format('Y-m-d') : '') }}">
+                        @error('due_at')
+                        <span class="text-danger small">{{ $message }}</span>
+                        @enderror
+                    </div>
                     <div class="mb-3">
                         <label for="started_at" class="form-label">Started At</label>
                         <input type="date" class="form-control @error('started_at') is-invalid @enderror {{ session('dark_mode') ? 'bg-dark text-white' : '' }}" name="started_at" value="{{ old('started_at', isset($task) ? \Carbon\Carbon::parse($task->started_at)->format('Y-m-d') : '') }}">
 
                         @error('started_at')
                         <span class="text-danger small">{{ $message }}</span>
+
                         @enderror
                     </div>
                     <div class="mb-3">
@@ -41,6 +50,7 @@
 
                         @error('ended_at')
                         <span class="text-danger small">{{ $message }}</span>
+
                         @enderror
                     </div>
                     <div class="mb-3">

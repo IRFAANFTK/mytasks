@@ -39,6 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/departments/{department}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
 
 
+    Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
+    Route::get('/calendar/events', [App\Http\Controllers\CalendarController::class, 'getTasks'])->name('calendar.events');
+
 
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -58,8 +61,6 @@ Route::middleware('auth')->group(function () {
         Route::get('roles_permissions/editRole/{id}', [RolePermissionController::class, 'editRole'])->name('roles_permissions.editRole');
         Route::put('roles_permissions/updateRole/{id}', [RolePermissionController::class, 'updateRole'])->name('roles_permissions.updateRole');
         Route::delete('roles_permissions/deleteRole/{id}', [RolePermissionController::class, 'deleteRole'])->name('roles_permissions.deleteRole');
-
-
     });
     Route::get('/toggle_dark', function () {
         session()->put('dark_mode', !session('dark_mode', false));

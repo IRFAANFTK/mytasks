@@ -57,7 +57,7 @@
                         <i class="bi bi-check-all" style="color: green" ></i>
                     </h3>
                 </div>
-                @foreach( $doneTaks  as $task)
+                @foreach( $doneTasks  as $task)
                 <div class="card" style="width: 18rem;border-color: green">
                     <div class="card-body">
                         <b>
