@@ -2,98 +2,82 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="text-center mb-3">
-                    <h3 class="card-title ">CREATED
-                        <i class=""></i>
-                    </h3>
-                </div>
-                    @foreach($createdTasks as $task)
-                    <div class="card" style="width: 18rem;border-color: #0dcaf0">
-                        <div class="card-body">
-                            <b>
-                            <h5 class="card-title">{{$task->name}}</b>
-                            </h5>
-                            <p class="card-text">Tasks that are just added to the system and not yet started.</p>
-                            <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-primary">
-                                <i class="bi bi-eye"></i> View
-                            </a>
-                            <a href="{{ route('tasks.start', $task->id) }}" class="btn btn-success">
-                                <i class=""></i> Start
-                            </a>
-                        </div>
-                    </div>
-                    <br>
-                    @endforeach
-            </div>
-            <div class="col-md-4">
-                <div class="text-center mb-3">
-                    <h3 class="card-title">IN PROGRESS
-                        <i class="bi bi-arrow-repeat"></i>
-                    </h3>
-                </div>
-                @foreach($inProgressTasks as $task)
-                <div class="card" style="width: 18rem;border-color: #0dcaf0">
-                    <div class="card-body">
-                        <b>
-                            <h5 class="card-title"> {{$task->name}}</b>
-                            </h5>
-                        <p class="card-text">Tasks currently being worked on.</p>
-                        <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-info">
-                            <i class="bi bi-eye"></i> View
-                        </a>
-                        <a href="{{ route('tasks.end', $task->id) }}" class="btn btn-dark"">
-                            <i class=""></i> End
-                        </a>
-                    </div>
-                </div>
-                <br>
-                @endforeach
-            </div>
-            <div class="col-md-4">
-                <div class="text-center mb-3">
-                    <h3 class="card-title">DONE
-                        <i class="bi bi-check-all" style="color: green" ></i>
-                    </h3>
-                </div>
-                @foreach( $doneTasks  as $task)
-                <div class="card" style="width: 18rem;border-color: green">
-                    <div class="card-body">
-                        <b>
-                        <h5 class="card-title"> {{$task->name}}</b>
-                            <i class="bi bi-check-all" style="color: green" ></i>
-                        </h5>
-                        <p class="card-text">Tasks that are completed.</p>
-                        <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-success">
-                            <i class="bi bi-eye"></i> View
-                        </a>
-
-                        <a href="{{ route('tasks.delete', $task->id) }}" class="btn btn-danger">
-                            <i class=""></i> Delete
-                        </a>
-                        <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">100%</div>
-                    </div>
-                </div>
-                    <br>
-                @endforeach
+        <div id="taskContainer" class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
     </div>
 @endsection
 
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("{{ route('tasks.get') }}")
+                .then(response => response.json())
+                .then(data => {
+                    const taskContainer = document.getElementById("taskContainer");
+                    taskContainer.innerHTML = '';
 
+                    const sections = [
+                        { title: 'CREATED', tasks: data.created, btn: 'Start', btnClass: 'success', icon: 'bi-play', borderColor: '#0dcaf0', routePrefix: 'start' },
+                        { title: 'IN PROGRESS', tasks: data.inProgress, btn: 'End', btnClass: 'dark', icon: 'bi-stop', borderColor: '#0dcaf0', routePrefix: 'end' },
+                        { title: 'DONE', tasks: data.done, btn: 'Delete', btnClass: 'danger', icon: 'bi-trash', borderColor: 'green', routePrefix: 'delete' },
+                    ];
 
+                    let row = document.createElement('div');
+                    row.className = 'row justify-content-center';
 
+                    sections.forEach(section => {
+                        let col = document.createElement('div');
+                        col.className = 'col-md-4';
 
+                        let header = `
+                        <div class="text-center mb-3">
+                            <h3 class="card-title">${section.title}
+                                ${section.title === 'IN PROGRESS' ? '<i class="bi bi-arrow-repeat"></i>' : ''}
+                                ${section.title === 'DONE' ? '<i class="bi bi-check-all" style="color: green"></i>' : ''}
+                            </h3>
+                        </div>
+                    `;
+                        col.innerHTML = header;
 
+                        section.tasks.forEach(task => {
+                            let description = section.title === 'CREATED'
+                                ? 'Tasks that are just added to the system and not yet started.'
+                                : section.title === 'IN PROGRESS'
+                                    ? 'Tasks currently being worked on.'
+                                    : 'Tasks that are completed.';
 
+                            let taskCard = document.createElement('div');
+                            taskCard.className = 'card mb-3';
+                            taskCard.style.width = '18rem';
+                            taskCard.style.borderColor = section.borderColor;
 
+                            taskCard.innerHTML = `
+                            <div class="card-body">
+                                <h5 class="card-title"><b>${task.name}</b></h5>
+                                <p class="card-text">${description}</p>
+                                <a href="/tasks/${task.id}" class="btn btn-primary mb-1">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+                                <a href="/tasks/${section.routePrefix}/${task.id}" class="btn btn-${section.btnClass} mb-1">
+                                    <i class="bi ${section.icon}"></i> ${section.btn}
+                                </a>
+                            </div>
+                        `;
+                            col.appendChild(taskCard);
+                        });
 
+                        row.appendChild(col);
+                    });
 
-
-
-
-
-
-
+                    taskContainer.appendChild(row);
+                })
+                .catch(error => {
+                    document.getElementById("taskContainer").innerHTML = "<p class='text-danger'>Failed to load tasks.</p>";
+                    console.error(error);
+                });
+        });
+    </script>
+@endpush

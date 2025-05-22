@@ -12,6 +12,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Maatwebsite\Excel\Facades\Excel;
 
+
 class TaskController extends Controller
 {
     public function index()
@@ -98,5 +99,15 @@ class TaskController extends Controller
      {
          return Excel::download(new TasksExport, 'tasks.xlsx');
      }
+
+    public function getTasks()
+    {
+        return response()->json([
+            'created' => Task::whereNull('started_at')->whereNull('ended_at')->get(),
+            'inProgress' => Task::whereNotNull('started_at')->whereNull('ended_at')->get(),
+            'done' => Task::whereNotNull('started_at')->whereNotNull('ended_at')->get(),
+        ]);
+    }
+
 
 }
