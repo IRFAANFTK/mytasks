@@ -30,6 +30,27 @@
                             {{ $task->description }}
                         </div>
                     </div>
+                    <div class="row">
+                        <label for="due_at"
+                               class="col-md-4 col-form-label text-md-end text-start"><strong>Due_at:</strong></label>
+                        <div class="col-md-6" style="line-height: 35px;">
+                            {{ $task->due_at }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="started_at"
+                               class="col-md-4 col-form-label text-md-end text-start"><strong>Started_at:</strong></label>
+                            {{ $task->started_at }}
+                        </div>
+                    </div>
+
+                <div class="row">
+                    <label for="ended_at"
+                           class="col-md-4 col-form-label text-md-end text-start"><strong>Ended_at:</strong></label>
+                    <div class="col-md-6" style="line-height: 35px;">
+                        {{ $task->ended_at }}
+                    </div>
+                </div>
 
                     <div class="row">
                         <label for="assignee"
@@ -39,9 +60,6 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 @endsection

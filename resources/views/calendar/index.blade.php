@@ -1,5 +1,6 @@
-
+@section('title','Calendar')
 @extends('layouts.app')
+@vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 @section('content')
 
@@ -10,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FullCalendar with AJAX</title>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js" rel="stylesheet" />
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
     <style>
@@ -19,6 +21,10 @@
         #calendar {
             max-width: 1000px;
             margin: 40px auto;
+        }
+        a {
+            color: black !important;
+            text-decoration: none !important;
         }
     </style>
 </head>

@@ -26,8 +26,8 @@ class HomeController extends Controller
     {
         $createdTasks = Task::whereNull('started_at')->whereNull('ended_at')->get();
         $inProgressTasks = Task::whereNotNull('started_at')->whereNull('ended_at')->get();
-        $doneTaks = Task::whereNotNull('started_at')->whereNotNull('ended_at')->get();
+        $doneTasks = Task::whereNotNull('started_at')->whereNotNull('ended_at')->get();
 
-        return view('home', compact('createdTasks','inProgressTasks','doneTaks'));
+        return view('home', compact('createdTasks','inProgressTasks','doneTasks'));
     }
 }

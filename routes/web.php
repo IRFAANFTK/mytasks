@@ -61,9 +61,6 @@ Route::middleware('auth')->group(function () {
         Route::put('roles_permissions/updateRole/{id}', [RolePermissionController::class, 'updateRole'])->name('roles_permissions.updateRole');
         Route::delete('roles_permissions/deleteRole/{id}', [RolePermissionController::class, 'deleteRole'])->name('roles_permissions.deleteRole');
     });
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
-        ->middleware('auth')
-        ->name('dashboard');
 
 
 

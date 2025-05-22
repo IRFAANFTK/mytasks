@@ -26,16 +26,12 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3 row">
-                        <label for="due_at"
-                               class="col-md-4 col-form-label text-md-end text-start">Due_at</label>
-                        <div class="col-md-6">
-                            <input type="date" class="form-control @error('due_at') is-invalid @enderror"
-                                   id="due_at" name="description" value="{{ $task->description }}">
-                            @if ($errors->has('due_at'))
-                                <span class="text-danger">{{ $errors->first('due_at') }}</span>
-                            @endif
-                        </div>
+                    <div class="mb-3">
+                        <label for="due_at" class="form-label">Due_at</label>
+                        <input type="date" class="form-control @error('due_at') is-invalid @enderror" name="started_at" value="{{ old('due_at', isset($task) ? \Carbon\Carbon::parse($task->due_at)->format('Y-m-d') : '') }}">
+                        @error('due_at')
+                        <span class="text-danger small">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="started_at" class="form-label">Started At</label>
