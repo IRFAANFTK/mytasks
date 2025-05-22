@@ -5,8 +5,8 @@
     <div class="row justify-content-center mt-3">
         <div class="col-md-8">
 
-            <div class="card">
-                <div class="card-header">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="float-start">
                         Add New User
                     </div>
@@ -21,8 +21,7 @@
                         <div class="mb-3 row">
                             <label for="name" class="col-md-4 col-form-label text-md-end text-start">Name</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                       name="name" value="{{ old('name') }}">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror {{ session('dark_mode') ? 'border-light' : '' }}" id="name" name="name" value="{{ old('name') }}">
                                 @if ($errors->has('name'))
                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
@@ -32,8 +31,7 @@
                         <div class="mb-3 row">
                             <label for="email" class="col-md-4 col-form-label text-md-end text-start">Email</label>
                             <div class="col-md-6">
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                                       name="email" value="{{ old('email') }}">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror {{ session('dark_mode') ? 'border-light' : '' }}" id="email" name="email" value="{{ old('email') }}">
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
@@ -41,12 +39,11 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="department"
-                                   class="col-md-4 col-form-label text-md-end text-start">Department</label>
+                            <label for="department" class="col-md-4 col-form-label text-md-end text-start">Department</label>
                             <div class="col-md-6">
-                                <select id="department_id" name="department_id">
+                                <select id="department_id" name="department_id" class="form-select {{ session('dark_mode') ? 'border-light' : '' }}">
                                     @foreach($departments as $department)
-                                        <option value= "{{ $department->id }}">{{$department->name}}</option>
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -55,8 +52,7 @@
                         <div class="mb-3 row">
                             <label for="password" class="col-md-4 col-form-label text-md-end text-start">Password</label>
                             <div class="col-md-6">
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                                       name="password">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror {{ session('dark_mode') ? 'border-light' : '' }}" id="password" name="password">
                                 @if ($errors->has('password'))
                                     <span class="text-danger">{{ $errors->first('password') }}</span>
                                 @endif
@@ -64,7 +60,7 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add Users">
+                            <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add User">
                         </div>
 
                     </form>

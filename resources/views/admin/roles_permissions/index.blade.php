@@ -1,12 +1,10 @@
-<!-- resources/views/admin/roles_permissions/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
     <div class="container mt-4">
-        <h1 class="mb-4">Roles & Permissions Management</h1>
+        <h1 class="section-title">Roles & Permissions Management</h1>
 
-
+        {{-- Create Role --}}
         <div class="card mb-4">
             <div class="card-header">
                 <h5>Create Role</h5>
@@ -23,7 +21,7 @@
             </div>
         </div>
 
-
+        {{-- Create Permission --}}
         <div class="card mb-4">
             <div class="card-header">
                 <h5>Create Permission</h5>
@@ -40,7 +38,7 @@
             </div>
         </div>
 
-
+        {{-- Roles --}}
         <div class="card mb-4">
             <div class="card-header">
                 <h5>Roles</h5>
@@ -51,19 +49,13 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             {{ $role->name }}
                             <div class="d-flex gap-2">
-                                <a href="{{ route('admin.roles_permissions.editRole', $role->id) }}" class="btn btn-primary btn-sm">
-                                    Edit
-                                </a>
-
-                                <form action="{{ route('admin.roles_permissions.deleteRole', $role->id) }}" method="POST"
-                                      onsubmit="return confirm('Are you sure you want to delete this role?');">
+                                <a href="{{ route('admin.roles_permissions.editRole', $role->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <form action="{{ route('admin.roles_permissions.deleteRole', $role->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this role?');">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>
                                 </form>
                             </div>
-
-
                             <span class="badge bg-info">{{ $role->permissions->count() }} Permissions</span>
                         </li>
                     @endforeach
@@ -71,7 +63,7 @@
             </div>
         </div>
 
-
+        {{-- Permissions --}}
         <div class="card mb-4">
             <div class="card-header">
                 <h5>Permissions</h5>
@@ -79,15 +71,13 @@
             <div class="card-body">
                 <ul class="list-group">
                     @foreach ($permissions as $permission)
-                        <li class="list-group-item">
-                            {{ $permission->name }}
-                        </li>
+                        <li class="list-group-item">{{ $permission->name }}</li>
                     @endforeach
                 </ul>
             </div>
         </div>
 
-
+        {{-- Assign Permissions --}}
         <div class="card mb-4">
             <div class="card-header">
                 <h5>Assign Permissions to Role</h5>
@@ -96,8 +86,7 @@
                 <form action="{{ route('admin.roles_permissions.assignPermissionsToRole') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-
-                        <label for="role" class="form-label">Select Role </label>
+                        <label for="role" class="form-label">Select Role</label>
                         <select name="roleId" id="role" class="form-select">
                             @foreach ($roles as $role)
                                 <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -106,7 +95,6 @@
                     </div>
 
                     <div class="mb-3">
-
                         <label for="permissions" class="form-label">Select Permissions</label>
                         <select name="permissions[]" id="permissions" class="form-select" multiple>
                             @foreach ($permissions as $permission)
@@ -118,6 +106,5 @@
                 </form>
             </div>
         </div>
-
     </div>
 @endsection

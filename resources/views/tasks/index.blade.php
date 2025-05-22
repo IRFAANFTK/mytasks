@@ -1,27 +1,32 @@
 @extends('layouts.app')
 
-
 @section('content')
-
     <div class="row justify-content-center mt-3">
         <div class="col-md-12">
-
             @if ($message = Session::get('success'))
                 <div class="alert alert-success" role="alert">
                     {{ $message }}
                 </div>
             @endif
 
-            <div class="card">
-                <div class="card-header">Tasks List</div>
+                <div class="card">
+                <div class="card-header {{ session('dark_mode') ? 'bg-dark text-white' : ''}}">
+                    Tasks
+                </div>
                 <div class="card-body">
                     @can('create tasks')
-                    <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm my-2"><i
-                            class="bi bi-plus-circle"></i> Add New Task</a>
+                        <div class="d-flex gap-2 mb-3">
+                            <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm">
+                                <i class="bi bi-plus-circle"></i> Add New Task
+                            </a>
+                            <a href="{{ route('tasks.export') }}" class="btn btn-success btn-sm">
+                                <i class="bi bi-file-earmark-excel-fill"></i> Export Tasks to Excel
+                            </a>
+                        </div>
                     @endcan
-                    <table class="table table-striped table-bordered">
-                    <table id="taskTable" class="table table-striped table-bordered">
-                        <thead>
+
+                        <table class="table table-bordered">
+                        <thead class="{{ session('dark_mode') ? 'table-secondary' : 'table-light' }}">
                         <tr>
                             <th scope="col">S#</th>
                             <th scope="col">Name</th>
@@ -42,84 +47,60 @@
                                 <td>{{ $task->description }}</td>
                                 <td>{{ $task->started_at }}</td>
                                 <td>{{ $task->ended_at }}</td>
-                                <td>{{ $task->user ? $task->user->name : 'No User Assigned' }}</td>
+                                <td>{{ $task->user->name ?? 'No User Assigned' }}</td>
                                 <td>{{ $task->created_at }}</td>
                                 <td>{{ $task->updated_at }}</td>
                                 <td>
-                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-
-
-                                        <a href="{{ route('tasks.show', $task->id) }}"
-                                           class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> Show</a>
-
-
+                                    <div class="d-flex gap-1">
+                                        <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-warning btn-sm">
+                                            <i class="bi bi-eye"></i> Show
+                                        </a>
                                         @can('update tasks')
-                                           class="btn btn-warning btn-sm" ><i class="bi bi-eye"></i> Show</a>        <br>
-                                        <br>
-                                        <a href="{{ route('tasks.edit', $task->id) }}"
-                                           class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </a>
                                         @endcan
-
-
                                         @can('delete tasks')
-                                           class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i>  Edit <br></a> <br>
-
-                                        <br>
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Do you want to delete this task?');"><i
-                                                class="bi bi-trash"></i> Delete
-
-                                        </button>
-                                            @endcan
-                                    </form>
+                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this task?')">
+                                                    <i class="bi bi-trash"></i> Delete
+                                                </button>
+                                            </form>
+                                        @endcan
+                                    </div>
                                 </td>
                             </tr>
                         @empty
-                            <td colspan="6">
-                                <span class="text-danger">
-                                    <strong>No Tasks Found!</strong>
-                                </span>
-                            </td>
+                            <tr>
+                                <td colspan="9">
+                                    <span class="text-danger"><strong>No Tasks Found</strong></span>
+                                </td>
+                            </tr>
                         @endforelse
                         </tbody>
                     </table>
-
-
-
                 </div>
             </div>
         </div>
     </div>
 
-
-
-
-
-
-
-
+    <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-
+    <!-- jQuery & DataTables Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
-
-
     <script>
-
         $(document).ready(function () {
-
             $('#taskTable').DataTable({
-
-                order: [[1, 'asc']]
-
+                order: [[1, 'asc']],
+                language: {
+                    searchPlaceholder: "Search tasks...",
+                    search: ""
+                }
             });
-
         });
-
     </script>
-
 @endsection

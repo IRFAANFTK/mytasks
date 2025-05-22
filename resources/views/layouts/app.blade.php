@@ -1,106 +1,103 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-
+    <!-- Fonts & Icons -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <!-- Bootstrap Icons (Add this link) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
-
-
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/table-theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/premium-navbar.css') }}">
 </head>
+
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    {{-- Premium Navbar --}}
+    @include('partials.premium-navbar')
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
-                    </li>
-                    @auth
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
-                    </li>
-                    @endauth
-
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('tasks.index') ? 'active' : '' }}" href="{{ route('tasks.index') }}">Tasks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('departments.index') ? 'active' : '' }}" href="{{ route('departments.index') }}">Department</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}" href="{{ route('users.index') }}">Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.roles_permissions.index') ? 'active' : '' }}" href="{{ route('admin.roles_permissions.index') }}">Roles & Permission</a>
-                    </li>
-                </ul>
-
-
-                <ul class="navbar-nav ms-auto">
-
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    @endguest
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <main class="py-4">
+    <main class="pt-5" style="margin-top: 70px">
         <div class="container">
             @yield('content')
         </div>
     </main>
 </div>
+
 @yield('script')
+
+<script>
+    // Theme switching functionality
+    const themeToggle = document.querySelector('.theme-toggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    document.documentElement.setAttribute('data-theme',
+        localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light')
+    );
+
+    themeToggle.addEventListener('click', () => {
+        themeToggle.style.transform = 'scale(0.95)';
+        setTimeout(() => themeToggle.style.transform = '', 150);
+
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+
+    // Mobile menu
+    const mobileMenuBtn = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = navLinks.classList.contains('active');
+        const icon = mobileMenuBtn.querySelector('i');
+        navLinks.classList.toggle('active');
+        icon.className = isOpen ? 'ri-menu-line' : 'ri-close-line';
+        mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-links') &&
+            !e.target.closest('.mobile-menu') &&
+            navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            mobileMenuBtn.querySelector('i').className = 'ri-menu-line';
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            e.target.closest('.nav-link').classList.add('active');
+            if (window.innerWidth <= 768) {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.querySelector('i').className = 'ri-menu-line';
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+
+    const navLinkItems = document.querySelectorAll('.nav-link');
+    navLinkItems.forEach((link, index) => {
+        link.style.animation = `navItemFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+    });
+
+    const logo = document.querySelector('.nav-logo');
+    logo.addEventListener('mousemove', (e) => {
+        const bound = logo.getBoundingClientRect();
+        const x = e.clientX - bound.left;
+        const y = e.clientY - bound.top;
+        logo.style.setProperty('--x', `${x}px`);
+        logo.style.setProperty('--y', `${y}px`);
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
