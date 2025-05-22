@@ -13,16 +13,16 @@ class AccountCreatedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $email;
-    public $password;
+    public $user;
+    public $plainPassword;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($email, $password)
+    public function __construct($user, $plainPassword)
     {
-        $this->email = $email;
-        $this->password = $password;
+        $this->user = $user;
+        $this->plainPassword = $plainPassword;
     }
 
     /**
@@ -32,7 +32,7 @@ class AccountCreatedMail extends Mailable
     {
         return $this->subject('Your Account Has Been Created')
             ->view('emails.account_created')
-            ->with(['email' => $this->email, 'password' => $this->password,
+            ->with(['user' => $this->user, 'plainPassword' => $this->plainPassword,
         ]);
     }
 

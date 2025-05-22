@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 
+use App\Exports\TasksExport;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TaskController extends Controller
 {
@@ -91,5 +93,10 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->back()->withSuccess('Task is deleted successfully.');
     }
+
+     public function export()
+     {
+         return Excel::download(new TasksExport, 'tasks.xlsx');
+     }
 
 }

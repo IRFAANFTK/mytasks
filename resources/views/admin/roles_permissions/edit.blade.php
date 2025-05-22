@@ -2,22 +2,22 @@
 
 @section('content')
     <div class="container mt-4">
-        <div class="card">
-            <div class="card-header">
+        <div class="card {{ session('dark_mode') ? 'bg-dark text-white border-light' : '' }}">
+            <div class="card-header {{ session('dark_mode') ? 'bg-dark text-white border-white' : '' }}">
                 <h4>Edit Role: {{ $role->name }}
-                <div class="float-end">
-                    <a href="{{ route('admin.roles_permissions.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
-                </div>
+                    <div class="float-end">
+                        <a href="{{ route('admin.roles_permissions.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
+                    </div>
                 </h4>
             </div>
-            <div class="card-body">
+            <div class="card-body {{ session('dark_mode') ? 'bg-dark text-white' : '' }}">
                 <form action="{{ route('admin.roles_permissions.updateRole', $role->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     <div class="mb-3">
                         <label class="form-label">Role Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ $role->name }}" required>
+                        <input type="text" name="name" class="form-control {{ session('dark_mode') ? 'bg-dark text-white border-light' : '' }}" value="{{ $role->name }}" required>
                     </div>
 
                     <div class="mb-3">
@@ -26,7 +26,7 @@
                             @foreach ($permissions as $permission)
                                 <div class="col-md-4">
                                     <div class="form-check">
-                                        <input class="form-check-input"
+                                        <input class="form-check-input {{ session('dark_mode') ? 'border-light' : '' }}"
                                                type="checkbox"
                                                name="permissions[]"
                                                value="{{ $permission->id }}"
@@ -45,6 +45,7 @@
                         <button type="submit" class="btn btn-success">Save Changes</button>
                     </div>
                 </form>
+
                 <form action="{{ route('admin.roles_permissions.deleteRole', $role->id) }}" method="POST"
                       onsubmit="return confirm('Are you sure you want to delete this role?');">
                     @csrf

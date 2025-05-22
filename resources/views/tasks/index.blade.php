@@ -9,17 +9,24 @@
                 </div>
             @endif
 
-            <div class="card">
-                <div class="card-header">Tasks List</div>
+                <div class="card">
+                <div class="card-header {{ session('dark_mode') ? 'bg-dark text-white' : ''}}">
+                    Tasks
+                </div>
                 <div class="card-body">
                     @can('create tasks')
-                        <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm my-2">
-                            <i class="bi bi-plus-circle"></i> Add New Task
-                        </a>
+                        <div class="d-flex gap-2 mb-3">
+                            <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm">
+                                <i class="bi bi-plus-circle"></i> Add New Task
+                            </a>
+                            <a href="{{ route('tasks.export') }}" class="btn btn-success btn-sm">
+                                <i class="bi bi-file-earmark-excel-fill"></i> Export Tasks to Excel
+                            </a>
+                        </div>
                     @endcan
 
-                    <table id="taskTable" class="table table-striped table-bordered">
-                        <thead>
+                        <table class="table table-bordered">
+                        <thead class="{{ session('dark_mode') ? 'table-secondary' : 'table-light' }}">
                         <tr>
                             <th scope="col">S#</th>
                             <th scope="col">Name</th>
@@ -48,13 +55,11 @@
                                         <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-warning btn-sm">
                                             <i class="bi bi-eye"></i> Show
                                         </a>
-
                                         @can('update tasks')
                                             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">
                                                 <i class="bi bi-pencil-square"></i> Edit
                                             </a>
                                         @endcan
-
                                         @can('delete tasks')
                                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
                                                 @csrf
@@ -90,7 +95,11 @@
     <script>
         $(document).ready(function () {
             $('#taskTable').DataTable({
-                order: [[1, 'asc']]
+                order: [[1, 'asc']],
+                language: {
+                    searchPlaceholder: "Search tasks...",
+                    search: ""
+                }
             });
         });
     </script>

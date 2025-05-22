@@ -51,7 +51,7 @@ class UserController extends Controller
         $userCount = User::count();
 
         Mail::to('admin@gmail.com')->send(new WelcomeEmail($user, $userCount));
-        Mail::to($user->email)->send(new AccountCreatedMail($user->email, $plainPassword));
+        Mail::to($user->email)->send(new AccountCreatedMail($user, $plainPassword));
 
         return redirect('/users')->with(['status' => 'User created successfully.',
         'userCount' => $userCount

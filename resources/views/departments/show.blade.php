@@ -5,8 +5,8 @@
     <div class="row justify-content-center mt-3">
         <div class="col-md-8">
 
-            <div class="card">
-                <div class="card-header">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="float-start">
                         Department Information
                     </div>

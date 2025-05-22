@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
 
 
 
@@ -57,7 +58,19 @@ Route::middleware('auth')->group(function () {
         Route::get('roles_permissions/editRole/{id}', [RolePermissionController::class, 'editRole'])->name('roles_permissions.editRole');
         Route::put('roles_permissions/updateRole/{id}', [RolePermissionController::class, 'updateRole'])->name('roles_permissions.updateRole');
         Route::delete('roles_permissions/deleteRole/{id}', [RolePermissionController::class, 'deleteRole'])->name('roles_permissions.deleteRole');
+
+
     });
+    Route::get('/toggle_dark', function () {
+        session()->put('dark_mode', !session('dark_mode', false));
+        return back();
+    })->name('toggle_dark');
+
+
+
+
+    Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
+
 
 
 
