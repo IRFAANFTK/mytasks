@@ -11,25 +11,25 @@
                 </div>
             @endif
 
-                <div class="card">
+            <div class="card">
                 <div class="card-header {{ session('dark_mode') ? 'bg-dark text-white' : '' }}">
-                    Users
+                    Utilisateurs
                 </div>
                 <div class="card-body">
                     @can('create users')
                         <a href="{{ route('users.create') }}" class="btn btn-success btn-sm my-2">
-                            <i class="bi bi-plus-circle"></i> Add New User
+                            <i class="bi bi-plus-circle"></i> Ajouter un nouvel utilisateur
                         </a>
                     @endcan
 
-                        <table class="table table-bordered">
+                    <table id="usersTable" class="table table-bordered">
                         <thead class="{{ session('dark_mode') ? 'table-secondary' : 'table-light' }}">
                         <tr>
-                            <th scope="col">S#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Department</th>
+                            <th scope="col">N°</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Département</th>
                             <th scope="col">Email</th>
-                            <th scope="col">No. of Tasks</th>
+                            <th scope="col">Nb. de tâches</th>
                             <th scope="col">Actions</th>
                         </tr>
                         </thead>
@@ -38,7 +38,7 @@
                             <tr>
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->department ? $user->department->name : 'No department' }}</td>
+                                <td>{{ $user->department ? $user->department->name : 'Aucun département' }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->tasks_count }}</td>
                                 <td>
@@ -47,18 +47,18 @@
                                         @method('DELETE')
 
                                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-warning btn-sm">
-                                            <i class="bi bi-eye"></i> Show
+                                            <i class="bi bi-eye"></i> Voir
                                         </a>
 
                                         @can('update users')
                                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">
-                                                <i class="bi bi-pencil-square"></i> Edit
+                                                <i class="bi bi-pencil-square"></i> Modifier
                                             </a>
                                         @endcan
 
                                         @can('delete users')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this user?');">
-                                                <i class="bi bi-trash"></i> Delete
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+                                                <i class="bi bi-trash"></i> Supprimer
                                             </button>
                                         @endcan
                                     </form>
@@ -67,7 +67,7 @@
                         @empty
                             <tr>
                                 <td colspan="6">
-                                    <span class="text-danger"><strong>No user Found!</strong></span>
+                                    <span class="text-danger"><strong>Aucun utilisateur trouvé !</strong></span>
                                 </td>
                             </tr>
                         @endforelse
@@ -88,7 +88,7 @@
             $('#usersTable').DataTable({
                 order: [[1, 'asc']],
                 language: {
-                    searchPlaceholder: "Search users...",
+                    searchPlaceholder: "Rechercher un utilisateur",
                     search: ""
                 }
             });

@@ -8,10 +8,10 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="float-start">
-                        Add New User
+                        Ajouter un nouvel utilisateur
                     </div>
                     <div class="float-end">
-                        <a href="{{ route('users.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
+                        <a href="{{ route('users.index') }}" class="btn btn-primary btn-sm">&larr; Retour</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -19,7 +19,7 @@
                         @csrf
 
                         <div class="mb-3 row">
-                            <label for="name" class="col-md-4 col-form-label text-md-end text-start">Name</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end text-start">Nom</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror {{ session('dark_mode') ? 'border-light' : '' }}" id="name" name="name" value="{{ old('name') }}">
                                 @if ($errors->has('name'))
@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="department" class="col-md-4 col-form-label text-md-end text-start">Department</label>
+                            <label for="department" class="col-md-4 col-form-label text-md-end text-start">Département</label>
                             <div class="col-md-6">
                                 <select id="department_id" name="department_id" class="form-select {{ session('dark_mode') ? 'border-light' : '' }}">
                                     @foreach($departments as $department)
@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="password" class="col-md-4 col-form-label text-md-end text-start">Password</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-end text-start">Mot de passe</label>
                             <div class="col-md-6">
                                 <input type="password" class="form-control @error('password') is-invalid @enderror {{ session('dark_mode') ? 'border-light' : '' }}" id="password" name="password">
                                 @if ($errors->has('password'))
@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add User">
+                            <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Ajouter l'utilisateur">
                         </div>
 
                     </form>
