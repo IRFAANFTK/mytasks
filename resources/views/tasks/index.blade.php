@@ -33,12 +33,12 @@
                             <th scope="col">S#</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Due à</th>
-                            <th scope="col">Started_at</th>
-                            <th scope="col">terminé_à</th>
-                            <th scope="col">Cessionnaire</th>
-                            <th scope="col">Créé à</th>
-                            <th scope="col">Mis à jour à</th>
+                            <th scope="col">Due le</th>
+                            <th scope="col">Démarré le</th>
+                            <th scope="col">Terminé le</th>
+                            <th scope="col">Responsable</th>
+                            <th scope="col">Créé le</th>
+                            <th scope="col">Mis à jour le</th>
                             <th scope="col">Actes</th>
                         </tr>
                         </thead>
@@ -57,7 +57,7 @@
                                 <td>
                                     <div class="d-flex gap-1">
                                         <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-warning btn-sm">
-                                            <i class="bi bi-eye"></i>Montrer
+                                            <i class="bi bi-eye"></i>Voir
                                         </a>
                                         @can('update tasks')
                                             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">
@@ -102,7 +102,7 @@
             $('#taskTable').DataTable({
                 order: [[1, 'asc']],
                 language: {
-                    searchPlaceholder: "Search tasks...",
+                    searchPlaceholder: "Rechercher des tâches..",
                     search: ""
                 }
             });

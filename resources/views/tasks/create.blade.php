@@ -46,7 +46,7 @@
                         <!-- Task Start Date -->
                         <div class="mb-3 row">
                             <label for="due_at"
-                                   class="col-md-4 col-form-label text-md-end text-start">Due à</label>
+                                   class="col-md-4 col-form-label text-md-end text-start">Due le</label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control @error('due_at') is-invalid @enderror"
                                        id="due_at" name="due_at">{{ old('due_at') }}</textarea>
@@ -57,7 +57,7 @@
                         </div>
                         <div class="mb-3 row">
                             <label for="started_at"
-                                   class="col-md-4 col-form-label text-md-end text-start">Commencé à</label>
+                                   class="col-md-4 col-form-label text-md-end text-start">Commencé le</label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control @error('started_at') is-invalid @enderror {{ session('dark_mode') ? 'bg-dark text-white' : '' }} calendar-input"
                                        id="started_at" name="started_at" value="{{ old('started_at') }}">
@@ -70,7 +70,7 @@
                         <!-- Task End Date -->
                         <div class="mb-3 row">
                             <label for="ended_at"
-                                   class="col-md-4 col-form-label text-md-end text-start">Terminé à</label>
+                                   class="col-md-4 col-form-label text-md-end text-start">Terminé le</label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control @error('ended_at') is-invalid @enderror {{ session('dark_mode') ? 'bg-dark text-white' : '' }} calendar-input"
                                        id="ended_at" name="ended_at" value="{{ old('ended_at') }}">
@@ -83,7 +83,7 @@
                         <!-- Assignee -->
                         <div class="mb-3 row">
                             <label for="assignee"
-                                   class="col-md-4 col-form-label text-md-end text-start">Cessionnaire</label>
+                                   class="col-md-4 col-form-label text-md-end text-start">Responsable</label>
                             <div class="col-md-6">
                                 <select id="user_id" name="user_id" class="form-select {{ session('dark_mode') ? 'bg-dark text-white' : '' }}">
                                     @foreach($users as $user)

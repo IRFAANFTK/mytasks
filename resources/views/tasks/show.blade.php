@@ -32,21 +32,21 @@
                     </div>
                     <div class="row">
                         <label for="due_at"
-                               class="col-md-4 col-form-label text-md-end text-start"><strong>Due à:</strong></label>
+                               class="col-md-4 col-form-label text-md-end text-start"><strong>Due le:</strong></label>
                         <div class="col-md-6" style="line-height: 35px;">
                             {{ $task->due_at }}
                         </div>
                     </div>
                     <div class="row">
                         <label for="started_at"
-                               class="col-md-4 col-form-label text-md-end text-start"><strong>Démarré_à:</strong></label>
+                               class="col-md-4 col-form-label text-md-end text-start"><strong>Démarré le:</strong></label>
                             {{ $task->started_at }}
                         </div>
                     </div>
 
                 <div class="row">
                     <label for="ended_at"
-                           class="col-md-4 col-form-label text-md-end text-start"><strong>Terminé_à:</strong></label>
+                           class="col-md-4 col-form-label text-md-end text-start"><strong>Terminé le:</strong></label>
                     <div class="col-md-6" style="line-height: 35px;">
                         {{ $task->ended_at }}
                     </div>
@@ -54,7 +54,7 @@
 
                     <div class="row">
                         <label for="assignee"
-                               class="col-md-4 col-form-label text-md-end text-start"><strong>Cessionnaire:</strong></label>
+                               class="col-md-4 col-form-label text-md-end text-start"><strong>Responsable:</strong></label>
                         <div class="col-md-6" style="line-height: 35px;">
                             {{ $task->assignee->name ?? 'N/A' }}
                         </div>

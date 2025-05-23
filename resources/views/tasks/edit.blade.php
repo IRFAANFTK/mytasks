@@ -29,14 +29,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="due_at" class="form-label">Due_at</label>
+                        <label for="due_at" class="form-label">Due le</label>
                         <input type="date" class="form-control @error('due_at') is-invalid @enderror" name="started_at" value="{{ old('due_at', isset($task) ? \Carbon\Carbon::parse($task->due_at)->format('Y-m-d') : '') }}">
                         @error('due_at')
                         <span class="text-danger small">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="started_at" class="form-label">Commencé à</label>
+                        <label for="started_at" class="form-label">Commencé le</label>
                         <input type="date" class="form-control @error('started_at') is-invalid @enderror {{ session('dark_mode') ? 'bg-dark text-white' : '' }}" name="started_at" value="{{ old('started_at', isset($task) ? \Carbon\Carbon::parse($task->started_at)->format('Y-m-d') : '') }}">
 
                         @error('started_at')
@@ -45,7 +45,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="ended_at" class="form-label">Terminé à</label>
+                        <label for="ended_at" class="form-label">Terminé le</label>
                         <input type="date" class="form-control @error('ended_at') is-invalid @enderror {{ session('dark_mode') ? 'bg-dark text-white' : '' }}" name="ended_at" value="{{ old('ended_at', isset($task) ? \Carbon\Carbon::parse($task->ended_at)->format('Y-m-d') : '') }}">
 
                         @error('ended_at')
@@ -54,7 +54,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="user_id" class="form-label">Cessionnaire</label>
+                        <label for="user_id" class="form-label">Responsable</label>
                         <select class="form-select {{ session('dark_mode') ? 'bg-dark text-white' : '' }}" name="user_id">
                             @foreach($users as $user)
                                 <option value="{{ $user->id }}" {{ old('user_id', $task->user_id ?? '') == $user->id ? 'selected' : '' }}>
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="priority" class="form-label">Priority</label>
+                        <label for="priority" class="form-label">Priorité</label>
                         <select name="priority" class="form-select {{ session('dark_mode') ? 'bg-dark text-white' : '' }}">
                             <option value="Low" {{ old('priority') == 'Low' ? 'selected' : '' }}>Low</option>
                             <option value="Medium" {{ old('priority') == 'Medium' ? 'selected' : '' }}>Medium</option>
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Mise à jour</button>
+                        <button type="submit" class="btn btn-primary">Mettre à jour</button>
                     </div>
 
                 </form>

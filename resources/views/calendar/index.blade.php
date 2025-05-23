@@ -19,17 +19,28 @@
             font-family: Arial, sans-serif;
         }
         #calendar {
-            max-width: 1000px;
-            margin: 40px auto;
+            max-width: 1150px;
+            margin: 60px auto;
         }
         a {
             color: black !important;
             text-decoration: none !important;
         }
+
+        .fc .fc-event-title {
+            white-space: normal !important;
+        }
+
+        .fc-event {
+            overflow: visible !important;
+            font-size: 14px; /* You can increase if needed */
+            padding: 2px 4px;
+        }
+
+
     </style>
 </head>
 <body>
-<h3> Due_At Task</h3>
 <div id="calendar"></div>
 
 <script>
