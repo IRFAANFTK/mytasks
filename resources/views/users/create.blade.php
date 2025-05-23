@@ -39,6 +39,16 @@
                         </div>
 
                         <div class="mb-3 row">
+                            <label for="password" class="col-md-4 col-form-label text-md-end text-start">Mot de passe</label>
+                            <div class="col-md-6">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror {{ session('dark_mode') ? 'border-light' : '' }}" id="password" name="password">
+                                @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
                             <label for="department" class="col-md-4 col-form-label text-md-end text-start">Département</label>
                             <div class="col-md-6">
                                 <select id="department_id" name="department_id" class="form-select {{ session('dark_mode') ? 'border-light' : '' }}">
@@ -50,14 +60,16 @@
                         </div>
 
                         <div class="mb-3 row">
-                            <label for="password" class="col-md-4 col-form-label text-md-end text-start">Mot de passe</label>
+                            <label for="role" class="col-md-4 col-form-label text-md-end text-start">Role</label>
                             <div class="col-md-6">
-                                <input type="password" class="form-control @error('password') is-invalid @enderror {{ session('dark_mode') ? 'border-light' : '' }}" id="password" name="password">
-                                @if ($errors->has('password'))
-                                    <span class="text-danger">{{ $errors->first('password') }}</span>
-                                @endif
-                            </div>
+                            <select name="role" id="role" class="form-select {{ session('dark_mode') ? 'border-light' : '' }}" required>
+                                <option value="">-- Sélectionner un rôle --</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->name }}">{{ ucfirst($role->name) }}</option>
+                                @endforeach
+                            </select>
                         </div>
+
 
                         <div class="mb-3 row">
                             <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Ajouter l'utilisateur">

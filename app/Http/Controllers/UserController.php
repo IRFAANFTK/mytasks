@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -24,8 +25,10 @@ class UserController extends Controller
     public function create()
     {
         $departments = Department::all();
+        $roles = Role::all();
         return view('users.create', [
-            'departments' => $departments
+            'departments' => $departments,
+            'roles' => $roles,
         ]);
     }
 
@@ -35,7 +38,8 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|max:20',
-            'department_id' => 'required'
+            'department_id' => 'required',
+            'role' => 'required|exists:roles,name',
         ]);
 
         $plainPassword = $request->password;
@@ -47,6 +51,8 @@ class UserController extends Controller
             'password' => Hash::make($plainPassword),
             'department_id' => $request->department_id,
         ]);
+
+        $user->assignRole($request->role);
 
         $userCount = User::count();
 
@@ -63,9 +69,11 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $departments = Department::all();
+        $roles = Role::all();
         return view('users.edit', [
             'user' => $user,
-            'departments' => $departments
+            'departments' => $departments,
+            'roles' => $roles,
         ]);
     }
 
@@ -74,14 +82,12 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'password' => ['nullable','confirmed','min:8','max:20'],
 
         ]);
 
         $data = [
             'name' => $request->name,
             'email' => $request->email,
-            'password' =>$request->password,
         ];
 
         if ($request->filled ('password')) {
@@ -89,8 +95,9 @@ class UserController extends Controller
 
         }
         $user->update($data);
+        $user->syncRoles($request->role);
 
-        return redirect('/users')->with('status', 'User Updated successfully with roles!');
+        return redirect('/users')->with('status', 'Utilisateur mis à jour avec succès avec les rôles !');
 
     }
 

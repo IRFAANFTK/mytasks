@@ -26,9 +26,7 @@
                     @endcan
 
                         <table class="table table-bordered">
-                        <thead class="{{ session('dark_mode') ? 'table-secondary' : 'table-light' }}">
-                    <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm my-2"><i
-                            class="bi bi-plus-circle"></i> Add New Task</a>
+
                     <table id="taskTable" class="table table-striped table-bordered">
                         <thead>
                         <tr>
