@@ -5,12 +5,12 @@
         <div class="row">
             <!-- Filter Sidebar -->
             <div class="col-md-2">
-                <h5 class="mb-3">Filter Tasks</h5>
+                <h5 class="mb-3">Filtrer les tâches</h5>
 
                 <div class="mb-3">
-                    <label for="departmentFilter" class="form-label">Department</label>
+                    <label for="departmentFilter" class="form-label">Département</label>
                     <select id="departmentFilter" class="form-select">
-                        <option value="">All Departments</option>
+                        <option value="">Tous les départements</option>
                         @foreach($departments as $department)
                             <option value="{{ $department->id }}">{{ $department->name }}</option>
                         @endforeach
@@ -18,9 +18,9 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="userFilter" class="form-label">User</label>
+                    <label for="userFilter" class="form-label">Utilisateur</label>
                     <select id="userFilter" class="form-select">
-                        <option value="">All Users</option>
+                        <option value="">Tous les utilisateurs</option>
                         @foreach($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
@@ -70,9 +70,9 @@
                         taskContainer.innerHTML = "";
 
                         const sections = [
-                            { title: 'CREATED', tasks: data.created, btn: 'Start', btnClass: 'success', icon: 'bi-play', borderColor: '#0dcaf0', routePrefix: 'start' },
-                            { title: 'IN PROGRESS', tasks: data.inProgress, btn: 'End', btnClass: 'dark', icon: 'bi-stop', borderColor: '#0dcaf0', routePrefix: 'end' },
-                            { title: 'DONE', tasks: data.done, btn: 'Delete', btnClass: 'danger', icon: 'bi-trash', borderColor: 'green', routePrefix: 'delete' },
+                            { title: 'CRÉÉ', tasks: data.created, btn: 'Commencer', btnClass: 'success', icon: 'bi-play', borderColor: '#0dcaf0', routePrefix: 'start' },
+                            { title: 'EN COURS', tasks: data.inProgress, btn: 'Terminer', btnClass: 'dark', icon: 'bi-stop', borderColor: '#0dcaf0', routePrefix: 'end' },
+                            { title: 'TERMINER', tasks: data.done, btn: 'Supprimer', btnClass: 'danger', icon: 'bi-trash', borderColor: 'green', routePrefix: 'delete' },
                         ];
 
                         let row = document.createElement('div');
@@ -103,10 +103,10 @@
                                 <h5 class="card-title"><b>${task.name}</b></h5>
                                 <p class="card-text">${task.description}</p>
                                 <p class="card-text">
-                                    <i class="bi bi-person-fill"></i> ${task.user?.name ?? 'Unknown'}
+                                    <i class="bi bi-person-fill me-1 text-primary"></i><strong> ${task.user?.name ?? 'Inconnu'}</strong>
                                 </p>
                                 <a href="/tasks/${task.id}" class="btn btn-primary mb-1">
-                                    <i class="bi bi-eye"></i> View
+                                    <i class="bi bi-eye"></i> Voir
                                 </a>
                                 <a href="/tasks/${section.routePrefix}/${task.id}" class="btn btn-${section.btnClass} mb-1">
                                     <i class="bi ${section.icon}"></i> ${section.btn}
@@ -122,7 +122,7 @@
                         taskContainer.appendChild(row);
                     })
                     .catch(error => {
-                        document.getElementById("taskContainer").innerHTML = "<p class='text-danger'>Failed to load tasks.</p>";
+                        document.getElementById("taskContainer").innerHTML = "<p class='text-danger'>Échec du chargement des tâches</p>";
                         console.error(error);
                     });
             }
