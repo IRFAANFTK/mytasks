@@ -11,23 +11,23 @@
                 </div>
             @endif
 
-                <div class="card">
+            <div class="card">
                 <div class="card-header {{ session('dark_mode') ? 'bg-dark text-white' : '' }}">
-                    Departments
+                    Départements
                 </div>
 
                 <div class="card-body">
                     @can('create department')
                         <a href="{{ route('departments.create') }}" class="btn btn-success btn-sm my-2">
-                            <i class="bi bi-plus-circle"></i> Add New Department
+                            <i class="bi bi-plus-circle"></i> Ajouter un département
                         </a>
                     @endcan
 
-                        <table class="table table-bordered">
+                    <table class="table table-bordered" id="departmentTable">
                         <thead class="{{ session('dark_mode') ? 'table-secondary' : 'table-light' }}">
                         <tr>
-                            <th scope="col">S#</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">N°</th>
+                            <th scope="col">Nom</th>
                             <th scope="col">Actions</th>
                         </tr>
                         </thead>
@@ -42,19 +42,19 @@
                                         @method('DELETE')
 
                                         <a href="{{ route('departments.show', $department->id) }}" class="btn btn-warning btn-sm">
-                                            <i class="bi bi-eye"></i> Show
+                                            <i class="bi bi-eye"></i> Voir
                                         </a>
 
                                         @can('update department')
                                             <a href="{{ route('departments.edit', $department->id) }}" class="btn btn-primary btn-sm">
-                                                <i class="bi bi-pencil-square"></i> Edit
+                                                <i class="bi bi-pencil-square"></i> Modifier
                                             </a>
                                         @endcan
 
                                         @can('delete department')
                                             <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Do you want to delete this department?');">
-                                                <i class="bi bi-trash"></i> Delete
+                                                    onclick="return confirm('Voulez-vous supprimer ce département ?');">
+                                                <i class="bi bi-trash"></i> Supprimer
                                             </button>
                                         @endcan
                                     </form>
@@ -64,7 +64,7 @@
                             <tr>
                                 <td colspan="3">
                                     <span class="text-danger">
-                                        <strong>No Department Found!</strong>
+                                        <strong>Aucun département trouvé !</strong>
                                     </span>
                                 </td>
                             </tr>
@@ -83,10 +83,10 @@
 
     <script>
         $(document).ready(function () {
-            $('#departmentIrfaan').DataTable({
+            $('#departmentTable').DataTable({
                 order: [[1, 'asc']],
                 language: {
-                    searchPlaceholder: "Search departments...",
+                    searchPlaceholder: "Rechercher un département",
                     search: ""
                 }
             });

@@ -7,28 +7,25 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div class="float-start">
-                        Add New Department
+                        Ajouter un département
                     </div>
                     <div class="float-end">
-                        <a href="{{ route('departments.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
+                        <a href="{{ route('departments.index') }}" class="btn btn-primary btn-sm">&larr; Retour</a>
                     </div>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('departments.store') }}" method="post">
                         @csrf
                         <div class="mb-3 row">
-                            <label for="name" class="col-md-4 col-form-label text-md-end text-start">Name</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end text-start">Nom</label>
                             <div class="col-md-6">
-                                <input type="text" name="name" class="form-control" placeholder="Department Name">
-                                </div>
+                                <input type="text" name="name" class="form-control" placeholder="Nom du département">
+                            </div>
                         </div>
-
-
 
                         <div class="mb-3 row">
-                            <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add Department">
+                            <input type="submit" class="col-md-4 offset-md-4 btn btn-primary" value="Ajouter le département">
                         </div>
-
                     </form>
                 </div>
             </div>
