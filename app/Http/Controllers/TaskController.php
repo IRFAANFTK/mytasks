@@ -115,6 +115,12 @@ class TaskController extends Controller
             $query->whereIn('user_id', $userIds);
         }
 
+        $authUser = auth()->user();
+
+        if(!$authUser->hasRole('admin')){
+            $query->where('user_id', $authUser->id);
+        }
+
         return response()->json([
             'created' => (clone $query)->whereNull('started_at')->whereNull('ended_at')->get(),
             'inProgress' => (clone $query)->whereNotNull('started_at')->whereNull('ended_at')->get(),
