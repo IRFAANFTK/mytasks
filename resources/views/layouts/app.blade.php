@@ -33,7 +33,7 @@
 @yield('script')
 
 <script>
-    // Theme switching functionality
+
     const themeToggle = document.querySelector('.theme-toggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     document.documentElement.setAttribute('data-theme',

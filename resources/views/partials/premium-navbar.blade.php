@@ -21,6 +21,10 @@
                 <i class="ri-user-line"></i>
                 <span>Utilisateurs</span>
             </a>
+            <a href="{{ route('calendar.index') }}" class="nav-link {{ request()->routeIs('calendar.index') ? 'active' : '' }}">
+                <i class="bi bi-calendar"></i>
+                <span>Calendrier</span>
+            </a>
             <a href="{{ route('admin.roles_permissions.index') }}" class="nav-link {{ request()->routeIs('admin.roles_permissions.index') ? 'active' : '' }}">
                 <i class="ri-shield-user-line"></i>
                 <span style="white-space: nowrap;">Rôles et Autorisations</span>
@@ -53,4 +57,31 @@
         </div>
     </div>
 </nav>
-<style>    .nav-container {        display: flex;        align-items: center;        gap: 12px;    }    .nav-logo {        display: flex;        align-items: center;        gap: 8px;        text-decoration: none;        color: black;        font-weight: bold;        font-size: 1.3rem;    }    .logo-shine {        width: 20px;        height: 20px;        border-radius: 50%;        background: linear-gradient(45deg, #ff4081, #40c4ff);        box-shadow: 0 0 6px #40c4ff;        flex-shrink: 0;    }</style>
+<style>
+    .nav-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+        font-size: 1.3rem;
+    }
+
+    .logo-shine {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #ff4081, #40c4ff);
+        box-shadow: 0 0 6px #40c4ff;
+        flex-shrink: 0;
+    }
+
+</style>
+

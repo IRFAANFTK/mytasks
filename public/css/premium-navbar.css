@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #6366f1;
+    --primary-color: #000000;
     --text-color: #0f172a;
     --bg-color: #ffffff;
     --nav-bg: rgba(255, 255, 255, 0.8);
@@ -11,7 +11,7 @@
 }
 
 [data-theme="dark"] {
-    --primary-color: #818cf8;
+    --primary-color: #0e0e0e;
     --text-color: #f1f5f9;
     --bg-color: #0f172a;
     --nav-bg: rgba(15, 23, 42, 0.8);
