@@ -23,7 +23,7 @@
     @include('partials.premium-navbar')
 
     <main class="pt-5" style="margin-top: 70px">
-        <div class="container">
+        <div class="container" style="max-width: 1800px;">
             @yield('content')
         </div>
     </main>

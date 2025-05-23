@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,10 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $createdTasks = Task::whereNull('started_at')->whereNull('ended_at')->get();
-        $inProgressTasks = Task::whereNotNull('started_at')->whereNull('ended_at')->get();
-        $doneTasks = Task::whereNotNull('started_at')->whereNotNull('ended_at')->get();
+        $users = User::all();
+        $departments = Department::all(); // Add this line
 
-        return view('home', compact('createdTasks','inProgressTasks','doneTasks'));
+        return view('home', compact('users', 'departments'));
     }
 }
