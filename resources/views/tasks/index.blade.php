@@ -11,37 +11,35 @@
 
                 <div class="card">
                 <div class="card-header {{ session('dark_mode') ? 'bg-dark text-white' : ''}}">
-                    Tasks
+                    Tâches
                 </div>
                 <div class="card-body">
                     @can('create tasks')
                         <div class="d-flex gap-2 mb-3">
                             <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm">
-                                <i class="bi bi-plus-circle"></i> Add New Task
+                                <i class="bi bi-plus-circle"></i> Ajouter une nouvelle tâche
                             </a>
                             <a href="{{ route('tasks.export') }}" class="btn btn-success btn-sm">
-                                <i class="bi bi-file-earmark-excel-fill"></i> Export Tasks to Excel
+                                <i class="bi bi-file-earmark-excel-fill"></i> Exporter des tâches vers Excel
                             </a>
                         </div>
                     @endcan
 
                         <table class="table table-bordered">
                         <thead class="{{ session('dark_mode') ? 'table-secondary' : 'table-light' }}">
-                    <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm my-2"><i
-                            class="bi bi-plus-circle"></i> Add New Task</a>
                     <table id="taskTable" class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th scope="col">S#</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Nom</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Due at</th>
+                            <th scope="col">Due à</th>
                             <th scope="col">Started_at</th>
-                            <th scope="col">Ended_at</th>
-                            <th scope="col">Assignee</th>
-                            <th scope="col">Created at</th>
-                            <th scope="col">Updated at</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col">terminé_à</th>
+                            <th scope="col">Cessionnaire</th>
+                            <th scope="col">Créé à</th>
+                            <th scope="col">Mis à jour à</th>
+                            <th scope="col">Actes</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,11 +57,11 @@
                                 <td>
                                     <div class="d-flex gap-1">
                                         <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-warning btn-sm">
-                                            <i class="bi bi-eye"></i> Show
+                                            <i class="bi bi-eye"></i>Montrer
                                         </a>
                                         @can('update tasks')
                                             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">
-                                                <i class="bi bi-pencil-square"></i> Edit
+                                                <i class="bi bi-pencil-square"></i> Modifier
                                             </a>
                                         @endcan
                                         @can('delete tasks')
@@ -71,32 +69,12 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Do you want to delete this task?')">
-                                                    <i class="bi bi-trash"></i> Delete
+                                                    <i class="bi bi-trash"></i> Supprimer
                                                 </button>
                                             </form>
                                         @endcan
                                     </div>
-                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
 
-                                        <a href="{{ route('tasks.show', $task->id) }}"
-                                           class="btn btn-warning btn-sm" ><i class="bi bi-eye"></i> Show</a>        <br>
-                                        <br>
-                                        <a href="{{ route('tasks.edit', $task->id) }}"
-
-                                           class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i>  Edit <br></a> <br>
-
-                                        <br>
-                                        <a href="{{ route('calendar.index', $task->id) }}"
-                                           class="btn btn-warning btn-sm" ><i class="bi bi-eye"></i> Calendar</a>        <br>
-                                        <br>
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Do you want to delete this task?');"><i
-                                                class="bi bi-trash"></i> Delete
-
-                                        </button>
-                                    </form>
                                 </td>
                             </tr>
                         @empty

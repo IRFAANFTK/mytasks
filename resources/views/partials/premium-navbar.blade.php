@@ -12,7 +12,7 @@
             </a>
             <a href="{{ route('tasks.index') }}" class="nav-link {{ request()->routeIs('tasks.index') ? 'active' : '' }}">
                 <i class="ri-task-line"></i>
-                <span>Tasks</span>
+                <span>Tâches</span>
             </a>
             <a href="{{ route('departments.index') }}" class="nav-link {{ request()->routeIs('departments.index') ? 'active' : '' }}">
                 <i class="ri-building-line"></i>

@@ -9,10 +9,10 @@
             <div class="card {{ session('dark_mode') ? 'bg-dark text-white border-light' : '' }}">
                 <div class="card-header {{ session('dark_mode') ? 'bg-dark text-white border-white' : '' }}">
                     <div class="float-start">
-                        Add New Task
+                        Ajouter une nouvelle tâche
                     </div>
                     <div class="float-end">
-                        <a href="{{ route('tasks.index') }}" class="btn btn-primary btn-sm">&larr; Back</a>
+                        <a href="{{ route('tasks.index') }}" class="btn btn-primary btn-sm">&larr; Retour</a>
                     </div>
                 </div>
                 <div class="card-body {{ session('dark_mode') ? 'bg-dark text-white' : '' }}">
@@ -21,7 +21,7 @@
 
                         <!-- Task Name -->
                         <div class="mb-3 row">
-                            <label for="name" class="col-md-4 col-form-label text-md-end text-start">Name</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end text-start">Nom</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror {{ session('dark_mode') ? 'bg-dark text-white' : '' }}" id="name"
                                        name="name" value="{{ old('name') }}">
@@ -46,7 +46,7 @@
                         <!-- Task Start Date -->
                         <div class="mb-3 row">
                             <label for="due_at"
-                                   class="col-md-4 col-form-label text-md-end text-start">Due At</label>
+                                   class="col-md-4 col-form-label text-md-end text-start">Due à</label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control @error('due_at') is-invalid @enderror"
                                        id="due_at" name="due_at">{{ old('due_at') }}</textarea>
@@ -57,7 +57,7 @@
                         </div>
                         <div class="mb-3 row">
                             <label for="started_at"
-                                   class="col-md-4 col-form-label text-md-end text-start">Started At</label>
+                                   class="col-md-4 col-form-label text-md-end text-start">Commencé à</label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control @error('started_at') is-invalid @enderror {{ session('dark_mode') ? 'bg-dark text-white' : '' }} calendar-input"
                                        id="started_at" name="started_at" value="{{ old('started_at') }}">
@@ -70,7 +70,7 @@
                         <!-- Task End Date -->
                         <div class="mb-3 row">
                             <label for="ended_at"
-                                   class="col-md-4 col-form-label text-md-end text-start">Ended At</label>
+                                   class="col-md-4 col-form-label text-md-end text-start">Terminé à</label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control @error('ended_at') is-invalid @enderror {{ session('dark_mode') ? 'bg-dark text-white' : '' }} calendar-input"
                                        id="ended_at" name="ended_at" value="{{ old('ended_at') }}">
@@ -83,7 +83,7 @@
                         <!-- Assignee -->
                         <div class="mb-3 row">
                             <label for="assignee"
-                                   class="col-md-4 col-form-label text-md-end text-start">Assignee</label>
+                                   class="col-md-4 col-form-label text-md-end text-start">Cessionnaire</label>
                             <div class="col-md-6">
                                 <select id="user_id" name="user_id" class="form-select {{ session('dark_mode') ? 'bg-dark text-white' : '' }}">
                                     @foreach($users as $user)
@@ -95,7 +95,7 @@
 
                         <!-- Progress -->
                         <div class="mb-3">
-                            <label for="progress" class="form-label">Progress (%)</label>
+                            <label for="progress" class="form-label">Progrès (%)</label>
                             <div class="d-flex align-items-center">
                                 <input type="range" class="form-range me-3" name="progress" id="progress" min="0" max="100"
                                        value="{{ old('progress') }}">
@@ -105,7 +105,7 @@
 
                         <!-- Submit Button -->
                         <div class="mb-3 row">
-                            <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Add Task">
+                            <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Ajouter une nouvelle tâche">
                         </div>
 
                     </form>
