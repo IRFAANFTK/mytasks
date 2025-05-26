@@ -11,7 +11,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
-
+Route::get('/tasks/export-pdf', [App\Http\Controllers\TaskController::class, 'exportPdf'])->name('tasks.exportPdf');
 
 
 Route::middleware('auth')->group(function () {
@@ -27,6 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::get('/getTasks', [App\Http\Controllers\TaskController::class, 'getTasks'])->name('tasks.get');
+    Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
+
+
+
+
 
 
 
@@ -68,14 +73,4 @@ Route::middleware('auth')->group(function () {
         session()->put('dark_mode', !session('dark_mode', false));
         return back();
     })->name('toggle_dark');
-
-
-
-
-    Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
-
-
-
-
-
 });

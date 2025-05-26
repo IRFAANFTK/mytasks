@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Exports\TasksExport;
 use App\Models\Task;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -126,6 +127,13 @@ class TaskController extends Controller
             'inProgress' => (clone $query)->whereNotNull('started_at')->whereNull('ended_at')->get(),
             'done' => (clone $query)->whereNotNull('started_at')->whereNotNull('ended_at')->get(),
         ]);
+    }
+
+    public function exportPdf()
+    {
+        $tasks = \App\Models\Task::with('user')->get();
+        $pdf = Pdf::loadView('pdf.tasks', compact('tasks'));
+        return $pdf->download('tasks.pdf');
     }
 
 
