@@ -1,10 +1,12 @@
 <nav class="premium-nav">
+    @auth
     <div class="nav-links" id="nav-Links">
     <div class="nav-container">
         <a href="{{ url('/') }}" class="nav-logo">
             <span class="logo-text">My Tasks</span>
             <span class="logo-shine"></span>
         </a>
+
             <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
                 <i class="ri-home-5-line"></i>
                 <span>Accueil</span>
@@ -30,6 +32,14 @@
                 <span style="white-space: nowrap;">Rôles et Autorisations</span>
             </a>
         </div>
+        @else
+
+            <div class="nav-links">
+                <span class="nav-welcome" style="font-weight: bold; font-size: 1.2rem; padding-left: 10px;">
+             Bienvenue sur Mes Tâches, mon petit mignon
+                </span>
+            </div>
+        @endauth
 
         <div class="nav-actions">
             <button class="theme-toggle" aria-label="Toggle theme">

@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FullCalendar with AJAX</title>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js" rel="stylesheet" />
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
     <style>
@@ -26,19 +25,16 @@
             color: black !important;
             text-decoration: none !important;
         }
-
         .fc .fc-event-title {
             white-space: normal !important;
         }
 
         .fc-event {
             overflow: visible !important;
-            font-size: 14px; /* You can increase if needed */
+            font-size: 14px;
             padding: 2px 4px;
         }
-
-
-    </style>
+   </style>
 </head>
 <body>
 <div id="calendar"></div>
@@ -57,16 +53,19 @@
                     success: function(response) {
                         successCallback(response);
                     },
+
                     error: function(xhr) {
                         failureCallback(xhr);
                     }
                 });
             },
-            eventColor: '#378006'
+            eventColor: '#378006',
+            themeSystem: 'standard'
 
         });
 
         calendar.render();
+
     });
 </script>
 @endsection

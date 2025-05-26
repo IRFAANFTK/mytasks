@@ -32,6 +32,25 @@
 
 @yield('script')
 
+
+<style>
+
+
+    #calendar a {
+        color: white;
+        text-decoration:none;
+    }
+    [data-theme="dark"] #calendar a {
+        color: white !important;
+    }
+    #calendar a {
+        color: #0e0e0e !important;
+    }
+
+
+
+
+</style>
 <script>
 
     const themeToggle = document.querySelector('.theme-toggle');
