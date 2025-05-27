@@ -1,17 +1,17 @@
 :root {
-    --primary-color: #000000;
+    --primary-color: #6366f1;
     --text-color: #0f172a;
     --bg-color: #ffffff;
     --nav-bg: rgba(255, 255, 255, 0.8);
     --nav-border: rgba(231, 231, 231, 0.8);
-    --nav-height: 60px;
+    --nav-height: 70px;
     --nav-shadow: 0 5px 20px -5px rgba(99, 102, 241, 0.1);
     --button-bg: rgba(99, 102, 241, 0.1);
     --button-hover: rgba(99, 102, 241, 0.15);
 }
 
 [data-theme="dark"] {
-    --primary-color: #0e0e0e;
+    --primary-color: #818cf8;
     --text-color: #f1f5f9;
     --bg-color: #0f172a;
     --nav-bg: rgba(15, 23, 42, 0.8);
@@ -29,42 +29,37 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Premium Navbar */
 .premium-nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    height: var(--nav-height);
+    backdrop-filter: blur(10px);
     background: var(--nav-bg);
     border-bottom: 1px solid var(--nav-border);
+    height: var(--nav-height);
     box-shadow: var(--nav-shadow);
     display: flex;
     align-items: center;
 }
 
-/* Navbar container */
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
-    height: 100%;
     gap: 2rem;
-    flex-wrap:nowrap;
 }
 
-/* Logo */
 .nav-logo {
     display: flex;
     align-items: center;
-    height: 100%;
     text-decoration: none;
-    padding: 0 1rem;
+    padding: 0.75rem 1.25rem;
     border-radius: 12px;
     position: relative;
     transition: all 0.3s ease;
@@ -79,13 +74,7 @@ body {
     -webkit-text-fill-color: transparent;
     background-size: 200% 200%;
     animation: gradientFlow 8s ease infinite;
-    display: flex;
-    align-items: center;
-    height: 100%;
-}
-
-.nav-logo:hover {
-    transform: translateY(-2px);
+    white-space: nowrap;
 }
 
 .nav-logo::before {
@@ -97,15 +86,6 @@ body {
     z-index: -2;
     opacity: 0;
     transition: opacity 0.3s ease;
-}
-
-.nav-logo::after {
-    content: '';
-    position: absolute;
-    inset: 1px;
-    background: var(--nav-bg);
-    border-radius: 11px;
-    z-index: -1;
 }
 
 .nav-logo:hover::before {
@@ -128,33 +108,24 @@ body {
     animation: shineLogo 1s ease forwards;
 }
 
-/* Navbar Links */
 .nav-links {
     display: flex;
-    align-items: center;
     gap: 1rem;
-    padding: 0 2rem;
-    flex-grow: 1;
-    justify-content: center;
-    height: 100%;
+    align-items: center;
+    padding-left: 2rem;
 }
 
 .nav-link {
     color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
-    position: relative;
     padding: 0.5rem 1rem;
     border-radius: 8px;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.nav-link i {
-    font-size: 1.2rem;
+    position: relative;
 }
 
 .nav-link::after {
@@ -185,24 +156,24 @@ body {
     box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
 }
 
-/* Actions (Right icons/buttons) */
+[data-theme="dark"] .nav-link.active {
+    color: white !important;
+}
+
 .nav-actions {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
+/* Buttons (Theme toggle, Notifications, Profile) */
 .theme-toggle,
-.mobile-menu {
+.dropdown-toggle {
     background: var(--button-bg);
     border: none;
-    color: var(--text-color);
-    cursor: pointer;
-    padding: 0.5rem;
-    font-size: 1.25rem;
-    width: 40px;
-    height: 40px;
     border-radius: 10px;
+    padding: 0.5rem;
+    color: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,90 +181,81 @@ body {
 }
 
 .theme-toggle:hover,
-.mobile-menu:hover {
+.dropdown-toggle:hover {
     background: var(--button-hover);
     transform: translateY(-2px);
 }
 
-.theme-toggle i {
-    position: absolute;
-    font-size: 1.25rem;
-    color: var(--primary-color);
-    transition: transform 0.3s, opacity 0.3s;
+/* Hide arrow in dropdown-toggle */
+.dropdown-toggle::after {
+    display: none !important;
 }
 
-.sun-icon {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.moon-icon {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-[data-theme="dark"] .sun-icon {
-    opacity: 0;
-    transform: translateY(-20px);
-}
-
-[data-theme="dark"] .moon-icon {
-    opacity: 1;
-    transform: translateY(0);
+/* Notification badge */
+.badge {
+    font-size: 0.7rem;
+    margin-left: 0.4rem;
 }
 
 /* Animations */
 @keyframes gradientFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @keyframes shineLogo {
-    0% { transform: translateX(-100%) rotate(45deg); }
-    100% { transform: translateX(200%) rotate(45deg); }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .nav-links {
-        position: fixed;
-        top: var(--nav-height);
-        left: 0;
-        right: 0;
-        background: var(--nav-bg);
-        padding: 1rem;
-        flex-direction: column;
-        gap: 0.5rem;
-        border-bottom: 1px solid var(--nav-border);
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        box-shadow: var(--nav-shadow);
+    0% {
+        transform: translateX(-100%) rotate(45deg);
     }
-
-    .nav-links.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .mobile-menu {
-        display: flex;
-    }
-
-    .nav-container {
-        padding: 0 1rem;
-    }
-
-    .nav-link {
-        width: 100%;
-        justify-content: flex-start;
-    }
-
-    .logo-text {
-        font-size: 1.5rem;
+    100% {
+        transform: translateX(200%) rotate(45deg);
     }
 }
+
+/* Unread notifications: bold and normal opacity */
+.notification-unread {
+    font-weight: 600;
+    color: #000; /* Dark text */
+    background-color: #eef6ff; /* Light highlight background */
+}
+
+/* Read notifications: normal weight, lighter color */
+.notification-read {
+    font-weight: 400;
+    color: #6c757d; /* Bootstrap's text-secondary color */
+    background-color: transparent;
+}
+
+/* Optional: hover style to highlight on mouseover */
+.dropdown-menu .dropdown-item:hover {
+    background-color: #e9ecef;
+    color: #000;
+}
+.dropdown-menu .dropdown-item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.notification-unread:hover,
+.notification-read:hover {
+    background-color: #dbe9ff; /* subtle hover effect */
+    color: #000;
+}
+.avatar-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.avatar-hover:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+}
+
+
+

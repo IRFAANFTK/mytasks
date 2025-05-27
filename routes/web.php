@@ -12,8 +12,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
-
-
+Route::get('/tasks/export-pdf', [App\Http\Controllers\TaskController::class, 'exportPdf'])->name('tasks.exportPdf');
 
 Route::middleware('auth')->group(function () {
 
@@ -28,6 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
     Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::get('/getTasks', [App\Http\Controllers\TaskController::class, 'getTasks'])->name('tasks.get');
+    Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
+
+
+
+
 
 
 
@@ -47,8 +51,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-
-
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
@@ -56,6 +58,18 @@ Route::middleware('auth')->group(function () {
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+
+
+    Route::get('/profile/settings', [UserController::class, 'editSettings'])->name('profile.settings');
+    Route::post('/profile/settings', [UserController::class, 'updateSettings'])->name('profile.settings.update');
+
+
+    // *** Notifications mark all read AJAX route ***
+    Route::post('/notifications/mark-all-read-ajax', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+        return response()->json(['status' => 'success']);
+    })->name('notifications.markAllReadAjax');
+
 
 
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -71,22 +85,4 @@ Route::middleware('auth')->group(function () {
         session()->put('dark_mode', !session('dark_mode', false));
         return back();
     })->name('toggle_dark');
-
-
-
-
-
-
-
-
-
-
-
-    Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
-
-
-
-
-
-
 });

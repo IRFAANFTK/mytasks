@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use App\Exports\TasksExport;
 use App\Models\Task;
 use App\Models\User;
+use App\Notifications\TaskAssignedNotification;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -36,10 +38,17 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        Task::create($request->all());
+        $task = Task::create($request->all());
+
+        if ($task->user_id) {
+            $user = User::find($task->user_id);
+            $user?->notify(new TaskAssignedNotification($task));
+        }
+
         return redirect()->route('tasks.index')
             ->withSuccess('New Tasks is added successfully.');
     }
+
 
     public function show(Task $task)
     {
@@ -61,6 +70,11 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $task->update($request->all());
+
+        if($task->user_id) {
+            $user = User::find($task->user_id);
+            $user?->notify(new TaskAssignedNotification($task));
+        }
         return redirect()->back()
             ->withSuccess('Task is updated successfully.');
 
@@ -125,6 +139,13 @@ class TaskController extends Controller
             'inProgress' => (clone $query)->whereNotNull('started_at')->whereNull('ended_at')->get(),
             'done' => (clone $query)->whereNotNull('started_at')->whereNotNull('ended_at')->get(),
         ]);
+    }
+
+    public function exportPdf()
+    {
+        $tasks = \App\Models\Task::with('user')->get();
+        $pdf = Pdf::loadView('pdf.tasks', compact('tasks'));
+        return $pdf->download('tasks.pdf');
     }
 
 

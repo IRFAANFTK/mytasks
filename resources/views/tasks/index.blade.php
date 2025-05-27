@@ -15,20 +15,25 @@
                 </div>
                 <div class="card-body">
                     @can('create tasks')
-                        <div class="d-flex gap-2 mb-3">
-                            <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm">
-                                <i class="bi bi-plus-circle"></i> Ajouter une nouvelle tâche
-                            </a>
-                            <a href="{{ route('tasks.export') }}" class="btn btn-success btn-sm">
+                        <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm my-2">
+                            <i class="bi bi-plus-circle"></i>
+                            Ajouter une nouvelle tâche
+                        </a>
+                    @endcan
+                            @can('export excel')
+                            <a href="{{ route('tasks.export') }}" class="btn btn-success btn-sm ms-2">
                                 <i class="bi bi-file-earmark-excel-fill"></i> Exporter des tâches vers Excel
                             </a>
-                        </div>
+                            @endcan
+
+                            @can('export pdf')
+                            <a href="{{ route('tasks.exportPdf') }}" class="btn btn-danger btn-sm ms-2">
+                                Télécharger en PDF
+                            </a>
                     @endcan
 
-                        <table class="table table-bordered">
-                        <thead class="{{ session('dark_mode') ? 'table-secondary' : 'table-light' }}">
-                    <table id="taskTable" class="table table-striped table-bordered">
-                        <thead>
+                        <table id="taskTable" class="table table-striped table-bordered {{ session('dark_mode') ? 'table-secondary' : 'table-light' }}">
+                            <thead>
                         <tr>
                             <th scope="col">S#</th>
                             <th scope="col">Nom</th>

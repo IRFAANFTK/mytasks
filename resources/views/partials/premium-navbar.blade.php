@@ -1,97 +1,135 @@
 <nav class="premium-nav">
-    @auth
-    <div class="nav-links" id="nav-Links">
     <div class="nav-container">
-        <a href="{{ url('/') }}" class="nav-logo">
-            <span class="logo-text">My Tasks</span>
-            <span class="logo-shine"></span>
-        </a>
-
+        <!-- Left: Logo & Nav links -->
+        <div class="nav-left d-flex align-items-center gap-3">
+            <a href="{{ url('/') }}" class="nav-logo">
+                <span class="logo-text">Mes Taches</span>
+                <span class="logo-shine"></span>
+            </a>
             <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-                <i class="ri-home-5-line"></i>
-                <span>Accueil</span>
+                <i class="ri-home-5-line"></i> <span>Accueil</span>
             </a>
             <a href="{{ route('tasks.index') }}" class="nav-link {{ request()->routeIs('tasks.index') ? 'active' : '' }}">
-                <i class="ri-task-line"></i>
-                <span>Tâches</span>
+                <i class="ri-task-line"></i> <span>Tâches</span>
             </a>
             <a href="{{ route('departments.index') }}" class="nav-link {{ request()->routeIs('departments.index') ? 'active' : '' }}">
-                <i class="ri-building-line"></i>
-                <span>Départements</span>
+                <i class="ri-building-line"></i> <span>Départements</span>
             </a>
             <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
-                <i class="ri-user-line"></i>
-                <span>Utilisateurs</span>
+                <i class="ri-user-line"></i> <span>Utilisateurs</span>
             </a>
             <a href="{{ route('calendar.index') }}" class="nav-link {{ request()->routeIs('calendar.index') ? 'active' : '' }}">
-                <i class="bi bi-calendar"></i>
-                <span>Calendrier</span>
+                <i class="bi bi-calendar"></i> <span>Calendrier</span>
             </a>
             <a href="{{ route('admin.roles_permissions.index') }}" class="nav-link {{ request()->routeIs('admin.roles_permissions.index') ? 'active' : '' }}">
-                <i class="ri-shield-user-line"></i>
-                <span style="white-space: nowrap;">Rôles et Autorisations</span>
+                <i class="ri-shield-user-line"></i> <span style="white-space: nowrap;">Rôles et Autorisations</span>
             </a>
         </div>
-        @else
 
-            <div class="nav-links">
-                <span class="nav-welcome" style="font-weight: bold; font-size: 1.2rem; padding-left: 10px;">
-             Bienvenue sur Mes Tâches, mon petit mignon
-                </span>
-            </div>
-        @endauth
-
-        <div class="nav-actions">
+        <!-- Right: Actions -->
+        <div class="nav-actions d-flex align-items-center gap-2">
             <button class="theme-toggle" aria-label="Toggle theme">
                 <i class="ri-sun-line sun-icon"></i>
                 <i class="ri-moon-line moon-icon"></i>
             </button>
+
+            @auth
+                <!-- Notifications -->
+                <div class="dropdown">
+                    <button
+                        class="btn btn-outline-secondary dropdown-toggle"
+                        type="button"
+                        id="notifDropdown"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        Notifications
+                        <span id="notifBadge" class="badge bg-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notifDropdown" id="notifMenu">
+                        @php
+                            $notifications = auth()->user()->notifications()->latest()->get();
+                        @endphp
+
+                        @forelse($notifications as $notification)
+                            <li>
+        <span class="dropdown-item {{ $notification->read_at ? 'notification-read' : 'notification-unread' }}">
+            {{ $notification->data['message'] }}
+        </span>
+                            </li>
+                        @empty
+                            <li><span class="dropdown-item text-muted">Aucune notification</span></li>
+                        @endforelse
+
+                    </ul>
+                </div>
+            @endauth
+
+            <!-- User menu -->
+            <!-- User menu -->
             <div class="dropdown">
-                <button class="mobile-menu dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="ri-menu-line"></i>
-                </button>
+                <a href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="d-block">
+                    @if(auth()->check())
+                        <img
+                            src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('default-avatar.png') }}"
+                            alt="{{ auth()->user()->name }}"
+                            class="rounded-circle avatar-hover"
+                            style="width: 35px; height: 35px; object-fit: cover; cursor: pointer;">
+                    @endif
+                </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
                     @auth
-                    <li><a class="dropdown-item" href="{{ route('users.show', auth()->user()->id) }}">Voir le profil</a></li>
+                        <li><a class="dropdown-item" href="{{ route('users.show', auth()->user()->id) }}">Voir le profil</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="dropdown-item" type="submit">Déconnexion</button>
+                            </form>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile.settings') }}">Paramètres du profil</a>
+                        </li>
                     @endauth
-                    @auth
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button class="dropdown-item" type="submit">Déconnexion</button>
-                        </form>
-                    </li>
-                        @endauth
                 </ul>
             </div>
         </div>
     </div>
 </nav>
-<style>
-    .nav-container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
 
-    .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        text-decoration: none;
-        color: black;
-        font-weight: bold;
-        font-size: 1.3rem;
-    }
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const notifDropdown = document.getElementById('notifDropdown');
+        const notifBadge = document.getElementById('notifBadge');
+        const notifMenu = document.getElementById('notifMenu');
 
-    .logo-shine {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: linear-gradient(45deg, #ff4081, #40c4ff);
-        box-shadow: 0 0 6px #40c4ff;
-        flex-shrink: 0;
-    }
+        if (notifDropdown) {
+            notifDropdown.addEventListener('show.bs.dropdown', function () {
+                // Only mark as read if there are unread notifications
+                if (notifBadge && parseInt(notifBadge.textContent) > 0) {
+                    fetch("{{ route('notifications.markAllReadAjax') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                // Hide badge since all are marked read
+                                notifBadge.style.display = 'none';
 
-</style>
-
+                                // Update dropdown menu items to have read style
+                                // Here you can reload or update the list dynamically, or simply reload the page
+                                // For simplicity, reload the page to refresh notifications
+                                location.reload();
+                            }
+                        })
+                        .catch(err => console.error('Error marking notifications read:', err));
+                }
+            });
+        }
+    });
+</script>
