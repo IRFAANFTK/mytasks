@@ -1,11 +1,12 @@
+
 @extends('layouts.app')
-
+@vite('resources/js/app.jsx')
 @section('content')
-
         <div class="row">
             <!-- Filter Sidebar -->
             <div class="col-md-2">
                 <h5 class="mb-3">Filtrer les tâches</h5>
+                <div id="react-root"></div>
 
                 <div class="mb-3">
                     <label for="departmentFilter" class="form-label">Département</label>

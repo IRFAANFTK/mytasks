@@ -102,14 +102,13 @@ class TaskController extends Controller
 
     public function getTasks(Request $request)
     {
-        $query = Task::with('user'); // <-- Add this line before the clones
+        $query = Task::with('user');
 
-        // Filter by user ID
+
         if ($request->filled('user_id')) {
             $query->where('user_id', $request->user_id);
         }
 
-        // Filter by department ID (only if user filter is not used)
         elseif ($request->filled('department_id')) {
             $userIds = User::where('department_id', $request->department_id)->pluck('id');
             $query->whereIn('user_id', $userIds);
