@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -112,6 +113,40 @@ class UserController extends Controller
     {
         $user->load('tasks','department');
         return view('users.show', compact('user'));
+    }
+
+    public function editSettings()
+    {
+        return view('profile.settings', ['user' => auth()->user()]);
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|confirmed|min:8',
+            'avatar' => 'nullable|image|max:2048',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // Handle avatar
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
+        }
+
+        $user->save();
+
+        return redirect()->route('profile.settings')->with('success', 'Profil mis à jour.');
     }
 
 }

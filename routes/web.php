@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Auth::routes();
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
 Route::get('/tasks/export-pdf', [App\Http\Controllers\TaskController::class, 'exportPdf'])->name('tasks.exportPdf');
-
 
 Route::middleware('auth')->group(function () {
 
@@ -45,11 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
     Route::get('/departments/{department}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
 
-
     Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
     Route::get('/calendar/events', [App\Http\Controllers\CalendarController::class, 'getTasks'])->name('calendar.events');
-
-
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
@@ -58,6 +57,18 @@ Route::middleware('auth')->group(function () {
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+
+
+    Route::get('/profile/settings', [UserController::class, 'editSettings'])->name('profile.settings');
+    Route::post('/profile/settings', [UserController::class, 'updateSettings'])->name('profile.settings.update');
+
+
+    // *** Notifications mark all read AJAX route ***
+    Route::post('/notifications/mark-all-read-ajax', function () {
+        auth()->user()->unreadNotifications->markAsRead();
+        return response()->json(['status' => 'success']);
+    })->name('notifications.markAllReadAjax');
+
 
 
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -69,6 +80,7 @@ Route::middleware('auth')->group(function () {
         Route::put('roles_permissions/updateRole/{id}', [RolePermissionController::class, 'updateRole'])->name('roles_permissions.updateRole');
         Route::delete('roles_permissions/deleteRole/{id}', [RolePermissionController::class, 'deleteRole'])->name('roles_permissions.deleteRole');
     });
+
     Route::get('/toggle_dark', function () {
         session()->put('dark_mode', !session('dark_mode', false));
         return back();

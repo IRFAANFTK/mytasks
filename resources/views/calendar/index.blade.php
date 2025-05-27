@@ -22,10 +22,7 @@
             max-width: 1150px;
             margin: 60px auto;
         }
-        a {
-            color: black !important;
-            text-decoration: none !important;
-        }
+
 
         .fc .fc-event-title {
             white-space: normal !important;
