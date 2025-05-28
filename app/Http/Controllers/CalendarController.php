@@ -21,20 +21,15 @@ class CalendarController extends Controller
             $dueAt = strtotime($task->due_at);
             $endedAt = $task->ended_at ? strtotime($task->ended_at) : null;
             $now = strtotime(now());
+
             if ($endedAt !== null) {
-                if ($endedAt <= $dueAt) {
-                    $color = 'green';
-                } else {
-                    $color = 'red';
-                }
+                $color = $endedAt <= $dueAt ? 'green' : 'red';
             } else {
-                if ($now > $dueAt) {
-                    $color = 'red';
-                } else {
-                    $color = 'gray';
-                }
+                $color = $now > $dueAt ? 'red' : 'gray';
             }
+
             return [
+                'id' => $task->id, // Required for drag and drop
                 'title' => $task->name,
                 'start' => $task->due_at,
                 'color' => $color,
@@ -42,8 +37,22 @@ class CalendarController extends Controller
             ];
         });
 
-
         return response()->json($events);
+    }
 
+    // Update task date when dragged
+    public function updateDate(Request $request, $id)
+    {
+        $task = Task::find($id);
+
+        if (!$task) {
+            return response()->json(['error' => 'Task not found'], 404);
+        }
+
+        // Update due_at with the new dragged date
+        $task->due_at = $request->newDate;
+        $task->save();
+
+        return response()->json(['success' => true]);
     }
 }

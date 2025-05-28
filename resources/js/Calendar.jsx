@@ -1,40 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import axios from 'axios';
 
+import '@fullcalendar/common/main.css';
+import '@fullcalendar/daygrid/main.css';
+import '@fullcalendar/interaction/main.css';
 
-const Calendar = () => {
-    const [events, setEvents] = useState([]);
+export default function Calendar() {
+    const calendarRef = useRef();
 
-    useEffect(() => {
-        axios.get('/calendar/events')
-            .then(res => {
-                console.log(res.data);
-                setEvents(res.data);
-            })
+    // Fetch tasks from Laravel controller
+    const fetchEvents = async (fetchInfo, successCallback, failureCallback) => {
+        try {
+            const res = await axios.get('/calendar/events');
+            successCallback(res.data);
+        } catch (err) {
+            failureCallback(err);
+        }
+    };
 
-            .catch(err => console.error(err));
-    }, []);
+    // Handle drag & drop to update task date
+    const handleEventDrop = async (info) => {
+        try {
+            const response = await axios.put(`/calendar/update-date/${info.event.id}`, {
+                newDate: info.event.startStr,
+            });
 
-    const handleEventClick = (clickInfo) => {
-        clickInfo.jsEvent.preventDefault();
-        if (clickInfo.event.url) {
-            window.open(clickInfo.event.url, '_blank');
+            if (!response.data.success) {
+                info.revert();
+                alert('Erreur lors de la mise à jour de la tâche.');
+            }
+        } catch (err) {
+            info.revert();
+            alert('Erreur de communication avec le serveur.');
         }
     };
 
     return (
-        <div style={{ maxWidth: 1150, margin: '60px auto' }}>
+        <div id="calendar-wrapper" style={{ maxWidth: '1150px', margin: '60px auto' }}>
             <FullCalendar
-                plugins={[dayGridPlugin]}
+                ref={calendarRef}
+                plugins={[dayGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
-                events={events}
+                editable={true}
                 eventColor="#378006"
-                eventClick={handleEventClick}
+                events={fetchEvents}
+                eventDrop={handleEventDrop}
             />
         </div>
     );
-};
-
-export default Calendar;
+}
