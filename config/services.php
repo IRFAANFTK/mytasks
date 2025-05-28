@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'tomorrow' => [
+        'api_key' => env('TOMORROW_API_KEY'),
+    ],
+
+
 ];
