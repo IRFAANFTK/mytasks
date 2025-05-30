@@ -5,12 +5,16 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WeatherController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Auth::routes();
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
 Route::get('/tasks/export-pdf', [App\Http\Controllers\TaskController::class, 'exportPdf'])->name('tasks.exportPdf');
 
@@ -28,6 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::get('/getTasks', [App\Http\Controllers\TaskController::class, 'getTasks'])->name('tasks.get');
     Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
+
+    Route::get('/weather', [WeatherController::class, 'forecast']);
+
+
+
+
+
 
     Route::resource('departments', DepartmentController::class);
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
@@ -72,6 +83,7 @@ Route::middleware('auth')->group(function () {
         Route::put('roles_permissions/updateRole/{id}', [RolePermissionController::class, 'updateRole'])->name('roles_permissions.updateRole');
         Route::delete('roles_permissions/deleteRole/{id}', [RolePermissionController::class, 'deleteRole'])->name('roles_permissions.deleteRole');
     });
+
     Route::get('/toggle_dark', function () {
         session()->put('dark_mode', !session('dark_mode', false));
         return back();
