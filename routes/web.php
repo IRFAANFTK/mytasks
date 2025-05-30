@@ -29,13 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/getTasks', [App\Http\Controllers\TaskController::class, 'getTasks'])->name('tasks.get');
     Route::get('/tasks/export', [TaskController::class, 'export'])->name('tasks.export');
 
-
-
-
-
-
-
-
     Route::resource('departments', DepartmentController::class);
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
     Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
@@ -50,9 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/calendar/events', [CalendarController::class, 'getTasks']);
     Route::put('/calendar/update-date/{id}', [CalendarController::class, 'updateDate']);
 
-
-
-
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
@@ -66,7 +56,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/settings', [UserController::class, 'updateSettings'])->name('profile.settings.update');
 
 
-    // *** Notifications mark all read AJAX route ***
     Route::post('/notifications/mark-all-read-ajax', function () {
         auth()->user()->unreadNotifications->markAsRead();
         return response()->json(['status' => 'success']);

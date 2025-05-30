@@ -1,6 +1,0 @@
-
-#react-calendar-root * {
-    pointer-events: all !important;
-    z-index: 999;
-    cursor: move !important;
-}
