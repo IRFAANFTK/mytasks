@@ -149,35 +149,96 @@
         }
 
         function loadWeather() {
+
             const weatherCard = document.getElementById("weatherCardBody");
+
             weatherCard.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Chargement météo...</span></div>';
 
-            fetch("/weather")
-                .then(res => res.json())
-                .then(data => {
-                    const interval = data?.data?.timelines?.[0]?.intervals?.[0];
-                    if (interval) {
-                        const temp = interval.values.temperature ?? 'N/A';
-                        const humidity = interval.values.humidity ?? 'N/A';
-                        const startTime = new Date(interval.startTime).toLocaleString('fr-FR', {
-                            day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
-                        });
+            if (navigator.geolocation) {
 
-                        weatherCard.innerHTML = `
+                navigator.geolocation.getCurrentPosition(
+
+                    function (position) {
+
+                        const lat = position.coords.latitude;
+
+                        const lon = position.coords.longitude;
+
+                        fetch(`/weather?lat=${lat}&lon=${lon}`)
+
+                            .then(res => res.json())
+
+                            .then(data => {
+
+                                const interval = data?.weather?.data?.timelines?.[0]?.intervals?.[0];
+
+                                const locationName = data?.location || 'Votre position';
+
+                                if (interval) {
+
+                                    const temp = interval.values.temperature ?? 'N/A';
+
+                                    const humidity = interval.values.humidity ?? 'N/A';
+
+                                    const startTime = new Date(interval.startTime).toLocaleString('fr-FR', {
+
+                                        day: '2-digit',
+
+                                        month: '2-digit',
+
+                                        year: 'numeric',
+
+                                        hour: '2-digit',
+
+                                        minute: '2-digit',
+
+                                        timeZone: 'Indian/Mauritius'
+
+                                    });
+
+                                    weatherCard.innerHTML = `
+<div class="mb-2 fw-bold">${locationName}</div>
 <ul class="list-group list-group-flush">
 <li class="list-group-item"><strong>Heure:</strong> ${startTime}</li>
 <li class="list-group-item"><strong>Température:</strong> ${temp} °C</li>
 <li class="list-group-item"><strong>Humidité:</strong> ${humidity}%</li>
 </ul>
-`;
-                    } else {
-                        weatherCard.innerHTML = `<div class="alert alert-warning mb-0">Données météo non disponibles.</div>`;
+
+                            `;
+
+                                } else {
+
+                                    weatherCard.innerHTML = `<div class="alert alert-warning mb-0">Données météo non disponibles.</div>`;
+
+                                }
+
+                            })
+
+                            .catch(error => {
+
+                                weatherCard.innerHTML = `<div class="alert alert-danger mb-0">Erreur météo</div>`;
+
+                                console.error("Weather API error:", error);
+
+                            });
+
+                    },
+
+                    function () {
+
+                        weatherCard.innerHTML = `<div class="alert alert-warning mb-0">Autorisation de localisation refusée.</div>`;
+
                     }
-                })
-                .catch(error => {
-                    weatherCard.innerHTML = `<div class="alert alert-danger mb-0">Erreur météo</div>`;
-                    console.error("Weather error:", error);
-                });
+
+                );
+
+            } else {
+
+                weatherCard.innerHTML = `<div class="alert alert-warning mb-0">Géolocalisation non supportée.</div>`;
+
+            }
+
         }
+
     </script>
 @endpush
