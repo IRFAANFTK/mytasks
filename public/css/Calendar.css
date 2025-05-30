@@ -1,0 +1,80 @@
+
+ #calendar {
+     max-width: 1000%;
+     margin: 0 auto;
+     padding: 20px;
+     background-color: #fff;
+     border-radius: 16px;
+     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+     transition: box-shadow 0.3s ease-in-out;
+ }
+
+#calendar:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.fc-event:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.fc-daygrid-event {
+    border-radius: 6px;
+    padding: 4px 6px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.fc-daygrid-event:hover {
+    background-color: #0a58ca !important;
+}
+
+ #calendar {
+     background: #fff;
+     color: #000;
+ }
+
+ [data-theme="dark"] #calendar {
+     background: #1e1e1e;
+     color: #eee;
+ }
+
+ [data-theme="dark"] .fc-toolbar-title,
+ [data-theme="dark"] .fc-col-header-cell-cushion,
+ [data-theme="dark"] .fc-daygrid-day-number,
+ [data-theme="dark"] .fc-event {
+     color: #eee !important;
+ }
+
+ [data-theme="dark"] .fc-event {
+     background-color: #343a40 !important;
+     border-color: #495057 !important;
+ }
+
+
+ [data-theme="dark"] .fc-event {
+     color: #fff !important;
+ }
+
+ /* Green tasks */
+ [data-theme="dark"] .fc-event[style*="green"] {
+     background-color: #198754 !important;
+     border-color: #198754 !important;
+ }
+
+
+ [data-theme="dark"] .fc-event[style*="red"] {
+     background-color: #dc3545 !important;
+     border-color: #dc3545 !important;
+ }
+
+ [data-theme="dark"] .fc-event[style*="gray"] {
+     background-color: #6c757d !important;
+     border-color: #6c757d !important;
+ }
+
+

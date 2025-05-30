@@ -23,3 +23,16 @@ body.dark .card {
     background-color: #1e1e1e;
     border-color: #333;
 }
+#calendar a {
+    color: white;
+    text-decoration:none;
+}
+[data-theme="dark"] #calendar a {
+    color: white !important;
+}
+#calendar a {
+    color: #378006 !important;
+}
+
+
+

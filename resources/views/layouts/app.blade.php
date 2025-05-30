@@ -14,14 +14,17 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ asset('css/table-theme.css') }}">
     <link rel="stylesheet" href="{{ asset('css/premium-navbar.css') }}">
 </head>
 
 <body>
 <div id="app">
-    {{-- Premium Navbar --}}
-    @include('partials.premium-navbar')
+    {{-- Show Navbar only when authenticated --}}m
+    @auth
+        @include('partials.premium-navbar')
+    @endauth
 
     <main class="pt-5" style="margin-top: 70px">
         <div class="container" style="max-width: 1800px;">
@@ -32,15 +35,24 @@
 
 @yield('script')
 
-<script>
+<style>
+    #calendar a {
+        text-decoration: none;
+        color: #0e0e0e !important;
+    }
+    [data-theme="dark"] #calendar a {
+        color: white !important;
+    }
+</style>
 
+<script>
     const themeToggle = document.querySelector('.theme-toggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     document.documentElement.setAttribute('data-theme',
         localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light')
     );
 
-    themeToggle.addEventListener('click', () => {
+    themeToggle?.addEventListener('click', () => {
         themeToggle.style.transform = 'scale(0.95)';
         setTimeout(() => themeToggle.style.transform = '', 150);
 
@@ -50,11 +62,10 @@
         localStorage.setItem('theme', newTheme);
     });
 
-    // Mobile menu
     const mobileMenuBtn = document.querySelector('.mobile-menu');
     const navLinks = document.querySelector('.nav-links');
 
-    mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuBtn?.addEventListener('click', () => {
         const isOpen = navLinks.classList.contains('active');
         const icon = mobileMenuBtn.querySelector('i');
         navLinks.classList.toggle('active');
@@ -65,7 +76,7 @@
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.nav-links') &&
             !e.target.closest('.mobile-menu') &&
-            navLinks.classList.contains('active')) {
+            navLinks?.classList.contains('active')) {
             navLinks.classList.remove('active');
             mobileMenuBtn.querySelector('i').className = 'ri-menu-line';
             mobileMenuBtn.setAttribute('aria-expanded', 'false');
@@ -84,13 +95,12 @@
         });
     });
 
-    const navLinkItems = document.querySelectorAll('.nav-link');
-    navLinkItems.forEach((link, index) => {
+    document.querySelectorAll('.nav-link').forEach((link, index) => {
         link.style.animation = `navItemFade 0.5s ease forwards ${index / 7 + 0.3}s`;
     });
 
     const logo = document.querySelector('.nav-logo');
-    logo.addEventListener('mousemove', (e) => {
+    logo?.addEventListener('mousemove', (e) => {
         const bound = logo.getBoundingClientRect();
         const x = e.clientX - bound.left;
         const y = e.clientY - bound.top;
@@ -98,6 +108,7 @@
         logo.style.setProperty('--y', `${y}px`);
     });
 </script>
+
 @stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

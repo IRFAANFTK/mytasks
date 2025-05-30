@@ -1,4 +1,3 @@
-
 <nav class="premium-nav">
     <div class="nav-container">
         <!-- Left: Logo & Nav links -->
@@ -93,7 +92,6 @@
                     @endauth
                 </ul>
             </div>
-
         </div>
     </div>
 </nav>
@@ -106,7 +104,7 @@
 
         if (notifDropdown) {
             notifDropdown.addEventListener('show.bs.dropdown', function () {
-                // Only mark as read if there are unread notifications
+
                 if (notifBadge && parseInt(notifBadge.textContent) > 0) {
                     fetch("{{ route('notifications.markAllReadAjax') }}", {
                         method: 'POST',
@@ -120,12 +118,10 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.status === 'success') {
-                                // Hide badge since all are marked read
+
                                 notifBadge.style.display = 'none';
 
-                                // Update dropdown menu items to have read style
-                                // Here you can reload or update the list dynamically, or simply reload the page
-                                // For simplicity, reload the page to refresh notifications
+
                                 location.reload();
                             }
                         })
